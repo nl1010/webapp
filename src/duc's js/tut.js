@@ -8,14 +8,7 @@ function Wizard()
 
 Wizard.prototype.setName = function(newName) 
 {
-	if (typeof newName != 'undefined')
-	{
-		this.name = newName;
-	}
-	else
-	{
-		document.write("Need a badass name");
-	}
+	this.name = newName;
 }
 
 Wizard.prototype.getName = function()
@@ -25,14 +18,37 @@ Wizard.prototype.getName = function()
 
 Wizard.prototype.setSpell = function(newSpell) 
 {
-	if (typeof newSpell != 'undefined')
+	this.spell = newSpell;
+}
+
+Wizard.prototype.chooseSpell = function()
+{
+	var seed = Math.floor((Math.random()*4)+1);
+	switch (seed)
 	{
-		this.spell = newSpell;
+		case 1:
+			this.takeSpell(magic_arrow);
+			break;
+		case 2:
+			this.takeSpell(b_magic_arrow);
+			break;
+		case 3:
+			this.takeSpell(fire_ball);
+			break;
+		case 4:
+			this.takeSpell(combustion);
+			break;
 	}
-	else
-	{
-		document.write("Need a badass spell");
-	}
+}
+
+Wizard.prototype.takeSpell = function(spell)
+{
+	document.write("<br/>"
+		+this.getName()
+		+" has chosen the "
+		+spell.getName()
+		+"!<br/>");
+	this.setSpell(spell);
 }
 
 Wizard.prototype.getSpell = function()
@@ -42,14 +58,7 @@ Wizard.prototype.getSpell = function()
 
 Wizard.prototype.setHealth = function(newHealth) 
 {
-	if (typeof newHealth != 'undefined')
-	{
-		this.health = newHealth;
-	}
-	else
-	{
-		document.write("Need a valid HP");
-	}
+	this.health = newHealth;
 }
 
 Wizard.prototype.getHealth = function()
@@ -67,14 +76,7 @@ function Spell()
 
 Spell.prototype.setName = function(newSpellName)
 {
-	if (typeof newSpellName != 'undefined')
-	{
-		this.name = newSpellName;
-	}
-	else
-	{
-		document.write("Need a valid Spell Name");
-	}
+	this.name = newSpellName;
 }
 
 Spell.prototype.getName = function()
@@ -84,14 +86,7 @@ Spell.prototype.getName = function()
 
 Spell.prototype.setDmg = function(newDmg)
 {
-	if (typeof newDmg != 'undefined')
-	{
-		this.dmg = newDmg;
-	}
-	else
-	{
-		document.write("Need a valid Damage");
-	}
+	this.dmg = newDmg;
 }
 
 Spell.prototype.getDmg = function()
@@ -119,6 +114,16 @@ Duel.prototype.setSecond = function(wizard)
 	this.second = wizard;
 }
 
+Duel.prototype.setWinner = function(wizard)
+{
+	this.winner = wizard;
+}
+
+Duel.prototype.setLoser = function(wizard)
+{
+	this.loser = wizard;
+}
+
 Duel.prototype.getFirst = function()
 {
 	return this.first;
@@ -139,82 +144,149 @@ Duel.prototype.getLoser = function()
 	return this.loser;
 }
 
+Duel.prototype.displayHP = function()
+{
+	document.write("<br/>"
+		+this.getFirst().getName()
+		+" 's HP: "
+		+this.getFirst().getHealth()
+		+"<br/>");
+
+	document.write("<br/>"
+		+this.getSecond().getName()
+		+" 's HP: "
+		+this.getSecond().getHealth()
+		+"<br/>");
+}
+
+Duel.prototype.castSpell = function(attacker, defender)
+{
+	document.write("<br/>"
+		+attacker.getName()
+		+" uses his motherfucking  "
+		+attacker.getSpell().getName()
+		+" to damage the shit out of "
+		+defender.getName()
+		+"<br/>");
+
+	defender.setHealth(
+		defender.getHealth()
+		-attacker.getSpell().getDmg());
+}
+
 Duel.prototype.fight = function()
 {
-	this.getSecond().setHealth(
-		this.getSecond().getHealth()
-		-this.getFirst().getSpell().getDmg());
-
+	this.castSpell(this.getFirst(), this.getSecond());
+	this.displayHP();
+	
 	if (this.getSecond().getHealth() <= 0)
 	{
-		this.winner = this.getFirst();
-		this.loser = this.getSecond();
+		this.setWinner(this.getFirst());
+		this.setLoser(this.getSecond());
 	}
-
-	this.getFirst().setHealth(
-		this.getFirst().getHealth()
-		-this.getSecond().getSpell().getDmg());	
-
-	if (this.getFirst().getHealth() <= 0)
+	else
 	{
-		this.winner = this.getSecond();
-		this.loser = this.getFirst();
+		this.castSpell(this.getSecond(), this.getFirst());
+		this.displayHP();
+	
+		if (this.getFirst().getHealth() <= 0)
+		{
+			this.setWinner(this.getSecond());
+			this.setLoser(this.getFirst());
+		}
 	}
 }
 
-
 /*---------------------------------------------------------*/
+/*SPELLS DB*/
 
 var magic_arrow = new Spell();
 magic_arrow.setName("Magic Arrow");
-magic_arrow.setDmg(10);
+magic_arrow.setDmg(4);
+
+var b_magic_arrow = new Spell();
+b_magic_arrow.setName("Badass Magic Arrow");
+b_magic_arrow.setDmg(6);
 
 var fire_ball = new Spell();
 fire_ball.setName("Fire Ball");
-fire_ball.setDmg(15);
+fire_ball.setDmg(10);
 
+var combustion = new Spell();
+combustion.setName("Combustion");
+combustion.setDmg(5);
+
+/*---------------------------------------------------------*/
+/*WIZARDS DB*/
 
 var logan = new Wizard();
 logan.setHealth(10);
-logan.setSpell(magic_arrow);
 logan.setName("Big Hat Logan");
 
 var pyro = new Wizard();
 pyro.setHealth(15);
-pyro.setSpell(fire_ball);
 pyro.setName("Laurentius");
+
+var griggs = new Wizard();
+griggs.setHealth(8);
+griggs.setName("Griggs");
 
 /*---------------------------------------------------------*/
 
-function killMe(wizard)
+function commence()
 {
-	document.write("<br/> You poke "+wizard.getName()+"! <br/>");
-	document.write(
-		wizard.getName()
-		+" uses "
-		+wizard.getSpell().getName()
-		+" to fucking destroy you, n00b! <br />");
+	var seed = Math.random();
+	if (seed < 0.33)
+	{
+		var init = Math.random();
+		init < 0.5 ? 
+			duelBetween(logan, pyro) : duelBetween(pyro, logan);
+	}
+	else if (0.33 <= seed && seed < 0.66) 
+	{
+		var init = Math.random();
+		init < 0.5 ? 
+			duelBetween(logan, griggs) : duelBetween(griggs, logan);
+	}
+	else if (0.66 <= seed)
+	{
+		var init = Math.random();
+		init < 0.5 ? 
+			duelBetween(pyro, griggs) : duelBetween(griggs, pyro);
+	}
 }
 
 function duelBetween(w1, w2)
 {
 	var duel = new Duel();
-	duel.setSecond(w2);
 	duel.setFirst(w1);
-	duel.fight();
-	document.write("<br/> A duel is commenced between "
+	duel.setSecond(w2);
+
+	document.write("\"We are the super powerful "
 		+duel.getFirst().getName()
 		+" and "
 		+duel.getSecond().getName()
 		+"!<br/>");
+
+	document.write("You shall be the witness to our incredible duel! \"<br/>");
+
+	duel.getFirst().chooseSpell();
+	duel.getSecond().chooseSpell();
+
+	duel.displayHP();
+	
+	while (duel.getFirst().getHealth() > 0 
+		&& duel.getSecond().getHealth() > 0)
+	{
+		duel.fight();
+	}
+	
+	document.write("<br/>");
 	document.write(
 		duel.getWinner().getName()
-		+" uses "
-		+duel.getWinner().getSpell().getName()
-		+" to fucking destroy "
+		+" fucking destroyed "
 		+duel.getLoser().getName()
-		+"!"
-		+"<br />");
+		+"!");
 }
 
 function evilLaugh()
@@ -222,7 +294,34 @@ function evilLaugh()
 	document.write("<br/>Muahahahahahah... <br />");
 }
 
-killMe(logan);
-killMe(pyro);
-duelBetween(pyro, logan);
-evilLaugh();
+commence();
+
+/*---------------------------------------------------------*/
+
+function hideAll()
+{
+	document.getElementById("pw").style.visibility = 'hidden';
+	document.getElementById("pc").style.visibility = 'hidden';
+	document.getElementById("r").style.visibility = 'hidden';	
+}
+
+function pokeWinner()
+{
+	document.getElementById("whattodo").innerHTML 
+	= "He beat the shit out of you for disrespecting him";
+	hideAll();
+}
+
+function pokeCorpse()
+{
+	document.getElementById("whattodo").innerHTML 
+	= "The victor beat the shit out of you for disrespecting his rival";		
+	hideAll();
+}
+
+function run()
+{
+	document.getElementById("whattodo").innerHTML 
+	= "You ran into an invisible wall and woke up finding yourself lying under your bed. Better go take a piss...";
+	hideAll();
+}
