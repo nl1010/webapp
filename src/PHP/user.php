@@ -2,8 +2,8 @@
 
   //user class to store user info
   class User {
-  	private $uid
-  	private $fields
+  	private $uid;
+  	private $fields;
 
   	//initialize user obj
   	public function __construct(){
@@ -49,7 +49,7 @@
   	}
 
   	//return an obj populated based on a username
-  	public static function getById($user_name){
+  	public static function getByName($user_name){
   		$user = new User();
   		$query = sprintf('SELECT USER_ID,PASSWORD,EMAIL_ADDR,IS_ACTIVE FROM %sUSER where USER_NAME = $d',DB_TABLE_PREFIX,$user_name);
   		$result=pg_query($query,$GLOBALS['DB']);
@@ -65,28 +65,32 @@
 
   	//save the record to the DB
   	public function save(){
-  		if($this->uid){		//if uid exist then update
-  			$query=sprintf('UPDATE %sUSER SET USERNAME = "%s", PASSWORD ="%s" , EMAIL_ADDR ="%s",IS_ACTIVE = %d WHERE USER_ID = %d',
-  				DB_TABLE_PREFIX,
+  		if($this->uid)
+      {		//if uid exist then update
+  			 $query=sprintf('UPDATE %s SET USERNAME = %s, PASSWORD ="%s" , EMAIL_ADDR ="%s",IS_ACTIVE = %d WHERE USER_ID = %d',
+          Table_REGISTER,
   				pg_escape_string($this->username, $GLOBALS['DB']),
   				pg_escape_string($this->password, $GLOBALS['DB']),
-  				$this->isActive,
   				$this->uid);
   			return pg_query($query,$GLOBALS['DB']);
-  		}else{				//if user doesn't exist(not registered yet) then insert 
-  		$query=sprintf('INSERT INTO %sUSER SET USERNAME = "%s", PASSWORD ="%s" , EMAIL_ADDR ="%s",IS_ACTIVE = %d WHERE USER_ID = %d',
-  			DB_TABLE_PREFIX,
+  		}
+      else
+      {				//if user doesn't exist(not registered yet) then insert 
+  		  $query=sprintf
+        ('INSERT INTO Table_REGISTER SET USERNAME = "%s", PASSWORD ="%s" , EMAIL_ADDR ="%s",IS_ACTIVE = %d WHERE USER_ID = %d',
   			pg_escape_string($this->username, $GLOBALS['DB']),
-  			pg_escape_string($this->password, $GLOBALS['DB']),
-  			pg_escape_string($this->emailAddr, $GLOBALS['DB']),
-  			$this->isActive);
-  		if(pg_query($GLOBALS['DB'],$query)){
+  			pg_escape_string($this->password, $GLOBALS['DB'])
+        );
+
+  		  if(pg_query($GLOBALS['DB'],$query)){
   			$this->uid=pg_insert_id($GLOBALS['DB']);
   			return true;
-  		}else {
+  		} else 
+      {
   			return false;
   		}
   	}
   }
+}
 
 ?>

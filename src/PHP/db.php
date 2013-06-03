@@ -1,7 +1,4 @@
 <?php
-//load debugging lib
-require_once('../Library/PhpConsole.php');
-PhpConsole::start(true, true, dirname(__FILE__));
 
 //DB connection&schema constants
 define('DB_HOST','localhost');
