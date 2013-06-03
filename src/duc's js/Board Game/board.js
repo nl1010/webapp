@@ -1,3 +1,7 @@
+
+
+
+
 /*Create the canvas--------------------------------*/
 var canvas = document.createElement("canvas");
 var ctx = canvas.getContext("2d");
@@ -55,6 +59,7 @@ var monster =
 };
 
 var monsterCaught = 0;
+document.getElementById("score").innerHTML = monsterCaught;
 
 /*Player input--------------------------------------*/
 var keysDown = {};
