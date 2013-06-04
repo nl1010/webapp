@@ -8,7 +8,8 @@
   	//initialize user obj
   	public function __construct(){
   		$this->uid = null;
-  		$this->fileds = array('username' =>'','password'=>'');
+  		$this->fields = array("username" =>"","password"=>"");
+  		echo "construct success</br>";
   	}
 
   	//get function
@@ -18,13 +19,23 @@
   		}else {
   			return $this->fields[$field];
   		}
+  		echo "get";
   	}
 
   	//set function
   	public function __set($field,$value){
   		if(array_key_exists($field, $this->fields)){
-  			$this->fileds[$filed] =$value;
-  		} 
+  			$this->fields[$field] =$value;
+  			echo "filed putting success";
+  		} else echo "error on __set </br>";
+  	}
+  	
+  	public function __set_username_password($username,$password){
+  		if(User::validateUsername($username)){
+  			
+  		
+  		}else echo "error:not a valide username <br>";
+  		
   	}
 
   	//check validity functions

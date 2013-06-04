@@ -15,9 +15,8 @@
 	// die('Error:Unable to connect the database');}
 	// else echo "success";
 	if(!$GLOBALS['DB'] = pg_connect("host=localhost port=5432 dbname=webapp2013 user=postgres password=luningyuan7210")){
-	die('Error:Unable to connect the database');
-	}else echo "success to connect the database";
-
+	die('Error:Unable to connect the database </br>');
+	}else echo "success to connect the database </br>";
 
 	$username = $_POST['username'];
 	$password = $_POST['password'];
@@ -25,15 +24,9 @@
 	//if(User::validateUsername($username)) echo "valid" else echo "invalid";
 	if(User::validateUsername($username)){
 		$user = new User();
-		$user.__set("username",$username);
-		$user.__set("password",$password);
-		echo $user.__get("username");
-	}
-
-
-
-	
-	
-
+		$user->__set("username",$username);
+		$user->__set("password",$password);
+		$user->__get("username");
+	}else echo "not validate username</br>";
 
 ?>
