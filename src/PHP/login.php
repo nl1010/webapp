@@ -1,6 +1,3 @@
-
-
-
 <?php
 	#load debugging lib
 	require_once('../Library/PhpConsole.php');
@@ -13,8 +10,22 @@
 	
 	$username = $_POST['username'];
 	$password = $_POST['password'];
+	
 	require_once('user.php');
-	$user = new User();
-	$user = $user->__set_username_password_to_DB($username,$password);
+	$user_id = User::password_check($username,$password);
 
+// 	
+// 	$user = User::get_by_name($username);
+// 	if($user == false){
+// 		echo "user doesn't exist";
+// 	}else {
+// 		if($password == null) {
+// 			echo "password cannot be empty";
+// 		} else {
+// 			if($user->__get("password")!=$password){
+// 				echo "incorrect password please retype again";
+// 			}
+// 		}
+// 	}
+	
 ?>
