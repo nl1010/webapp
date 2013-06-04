@@ -19,7 +19,7 @@ bgImage.onload = function()
 };
 bgImage.src = "images/background.png";
 
-//hero
+//players
 var heroReady = false;
 var heroImage = new Image();
 
@@ -29,6 +29,14 @@ heroImage.onload = function()
 };
 heroImage.src = "images/hero.png";
 
+var wizReady = false;
+var wizImage = new Image();
+
+wizImage.onload = function()
+{
+	wizReady = true;
+};
+wizImage.src = "images/wiz.png";
 
 //monster
 var monsterReady = false;
@@ -42,22 +50,22 @@ monsterImage.src = "images/monster.png";
 
 
 /*Game objects-------------------------------------*/
-var hero = 
+var p1 = 
 {
 	speed:256
-	//x:0
-	//y:0
 };
-
-var monster =
+var p2 = 
 {
-	//x:0
-	//y:0
+	speed:256
 };
 
-var monsterCaught = 0;
-//document.getElementById("score").innerHTML = monsterCaught;
+var monster = {};
 
+var monsterCaught1 = 0;
+var monsterCaught2 = 0;
+
+var scoreA = 0;
+var scoreB = 0;
 /*Player input--------------------------------------*/
 var keysDown = {};
 
@@ -88,36 +96,73 @@ var update = function(modifier)
 {
 	//up
 	if (38 in keysDown
-		&& hero.y > 0)
-		hero.y -= hero.speed * modifier;
+		&& p1.y > 0)
+		p1.y -= p1.speed * modifier;
 	//down
 	if (40 in keysDown
-		&& hero.y < canvas.height-32)
-		hero.y += hero.speed * modifier;
+		&& p1.y < canvas.height-32)
+		p1.y += p1.speed * modifier;
 	//left
 	if (37 in keysDown
-		&& hero.x > 0)
-		hero.x -= hero.speed * modifier;
+		&& p1.x > 0)
+		p1.x -= p1.speed * modifier;
 	//right
 	if (39 in keysDown
-		&& hero.x < canvas.width-32)
-		hero.x += hero.speed * modifier;
+		&& p1.x < canvas.width-32)
+		p1.x += p1.speed * modifier;
+
+	//up
+	if (87 in keysDown
+		&& p2.y > 0)
+		p2.y -= p2.speed * modifier;
+	//down
+	if (83 in keysDown
+		&& p2.y < canvas.height-32)
+		p2.y += p2.speed * modifier;
+	//left
+	if (65 in keysDown
+		&& p2.x > 0)
+		p2.x -= p2.speed * modifier;
+	//right
+	if (68 in keysDown
+		&& p2.x < canvas.width-32)
+		p2.x += p2.speed * modifier;
 
 	//Monster is caught
 	//monster and hero are two 32x32 pixels images
 	if (
-		hero.x <= (monster.x+32)
-		&& monster.x <= (hero.x+32)
-		&& hero.y <= (monster.y+32)
-		&& monster.y <= (hero.y+32)
+		p1.x <= (monster.x+32)
+		&& monster.x <= (p1.x+32)
+		&& p1.y <= (monster.y+32)
+		&& monster.y <= (p1.y+32)
 		)
 	{
-		monsterCaught+=1;
-		document.getElementById("score").innerHTML
-		=monsterCaught;
-		//?
+		monsterCaught1+=1;
 		reset();
 	}
+	if (
+		p2.x <= (monster.x+32)
+		&& monster.x <= (p2.x+32)
+		&& p2.y <= (monster.y+32)
+		&& monster.y <= (p2.y+32)
+		)
+	{
+		monsterCaught2+=1;
+		reset();
+	}
+
+	if (monsterCaught1>=10){
+		placePlayers();
+		scoreA++;
+		resetScore();
+	}
+		
+	if (monsterCaught2>=10){
+		placePlayers();
+		scoreB++;
+		resetScore();
+	}
+		
 }
 
 /*Render Objects------------------------------------*/
@@ -127,7 +172,9 @@ var render = function()
 	if (bgReady)
 		ctx.drawImage(bgImage,0,0);
 	if (heroReady)
-		ctx.drawImage(heroImage,hero.x,hero.y);
+		ctx.drawImage(heroImage,p1.x,p1.y);
+	if (wizReady)
+		ctx.drawImage(wizImage,p2.x,p2.y);
 	if (monsterReady)
 		ctx.drawImage(monsterImage,monster.x,monster.y);
 
@@ -136,13 +183,17 @@ var render = function()
 	ctx.font = "24px Helvetica";
 	ctx.textAlign = "left";
 	ctx.textBaseline = "top";
-	ctx.fillText("Goblins caught: "+monsterCaught,32,32);
+	ctx.fillText(monsterCaught2,32,32);
+	ctx.fillText(monsterCaught1,468,32);
+	ctx.fillText("B: "+scoreB,32,420);
+	ctx.fillText("A: "+scoreA,436,420);	
 };
 
 /*Main Game Loop------------------------------------*/
 var main = function()
 {
 	//Time stamp
+
 	var now = Date.now();
 	var delta = now - then;
 
@@ -152,10 +203,25 @@ var main = function()
 	then = now;
 };
 
-/*Start the Game------------------------------------*/
-hero.x = canvas.width/2;
-hero.y = canvas.height/2;
 
+var resetScore = function()
+{
+	monsterCaught1=0;
+	monsterCaught2=0;
+};
+
+var placePlayers = function()
+{
+	p1.x = canvas.width/2-32;
+	p1.y = canvas.height/2-32;
+
+	p2.x = canvas.width/2;
+	p2.y = canvas.height/2-32;
+}
+
+/*Start the Game------------------------------------*/
+
+placePlayers();
 reset();
 var then = Date.now();
 setInterval(main,1);
