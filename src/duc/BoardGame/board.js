@@ -1,7 +1,4 @@
 
-
-
-
 /*Create the canvas--------------------------------*/
 var canvas = document.createElement("canvas");
 var ctx = canvas.getContext("2d");
@@ -59,7 +56,7 @@ var monster =
 };
 
 var monsterCaught = 0;
-document.getElementById("score").innerHTML = monsterCaught;
+//document.getElementById("score").innerHTML = monsterCaught;
 
 /*Player input--------------------------------------*/
 var keysDown = {};
@@ -67,20 +64,19 @@ var keysDown = {};
 addEventListener("keydown", function (e) 
 	{
 		keysDown[e.keyCode] = true;
-	}, false);
+	}
+	, false);
 
 addEventListener("keyup", function (e) 
 	{
 		delete keysDown[e.keyCode];
-	}, false);
+	}
+	, false);
 
 /*New Game------------------------------------------*/
 //Reset the game when player catches a monster
 var reset = function()
 {
-	hero.x = canvas.width/2;
-	hero.y = canvas.height/2;
-
 	//throw monster randomly on the screen
 	monster.x = 32+(Math.random()*(canvas.width-64));
 	monster.y = 32+(Math.random()*(canvas.height-64));
@@ -91,16 +87,20 @@ var reset = function()
 var update = function(modifier)
 {
 	//up
-	if (38 in keysDown)
+	if (38 in keysDown
+		&& hero.y > 0)
 		hero.y -= hero.speed * modifier;
 	//down
-	if (40 in keysDown)
+	if (40 in keysDown
+		&& hero.y < canvas.height-32)
 		hero.y += hero.speed * modifier;
 	//left
-	if (37 in keysDown)
+	if (37 in keysDown
+		&& hero.x > 0)
 		hero.x -= hero.speed * modifier;
 	//right
-	if (39 in keysDown)
+	if (39 in keysDown
+		&& hero.x < canvas.width-32)
 		hero.x += hero.speed * modifier;
 
 	//Monster is caught
@@ -112,7 +112,9 @@ var update = function(modifier)
 		&& monster.y <= (hero.y+32)
 		)
 	{
-		++monsterCaught;
+		monsterCaught+=1;
+		document.getElementById("score").innerHTML
+		=monsterCaught;
 		//?
 		reset();
 	}
@@ -151,6 +153,9 @@ var main = function()
 };
 
 /*Start the Game------------------------------------*/
+hero.x = canvas.width/2;
+hero.y = canvas.height/2;
+
 reset();
 var then = Date.now();
 setInterval(main,1);
