@@ -29,6 +29,8 @@
 // 		$user->__set("password",$password);
 // 		$user->__get("username");
 // 	}else echo "not validate username</br>";
-	$user = User::__set_username_password_to_DB($username,$password);
-	$user->save();
+	$user = new User();
+	$user = $user->__set_username_password_to_DB($username,$password);
+// 	$user->__set("password",$password);
+	printf("username = %s",$user->__get("username") );
 ?>

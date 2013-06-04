@@ -8,45 +8,53 @@ class User {
 
 	//initialize user obj
 	public function __construct(){
-		$this->uid = null;
-		$this->fields = array("username" =>"","password"=>"");
+		$this->uid ='';
+		$this->fields = array("username" =>'',"password"=>'');
 		echo "construct success</br>";
 	}
 
 	//get function
 	public function __get($field) {
-		if($filed = 'userId') {
+		if($field == 'userId') {
 			return $this->uid;
 		}else {
 			return $this->fields[$field];
 		}
-		echo "get";
 	}
 
 	//set function
 	public function __set($field,$value){
 		if(array_key_exists($field, $this->fields)){
 			$this->fields[$field] =$value;
-			echo "filed putting success";
-		} else echo "error on __set </br>";
+			printf("value=%s",$this->__get($field));
+		} else echo "field not exist in __set </br>";
 	}
-	 
-	public static function __set_username_password_to_DB($username,$password){
+
+	public function __set_username_password_to_DB($username,$password){
 		if ($password != null ){
 			if(User::validateUsername($username)){
 				$user = new User();
 				$user->__set("username",$username);
 				$user->__set("password",$password);
-				return $user;
-			}else echo "error:not a valide username <br>";
-		} else echo "error:password needed";
+				$query=sprintf('INSERT INTO table_register (username,password) VALUES (\'%s\',\'%s\')',
+							pg_escape_string($user->username),
+							pg_escape_string($user->password)
+					);
+					if(pg_query($GLOBALS['DB'],$query)){
+						//successfully inserted
+						echo $user->username;
+						return $user;
+					} else
+						return false;
+			}else echo "error:not a valide username </br>";
+		} else echo "error:password needed </br>";
 	}
 
 	//check validity functions
 	public static function validateUsername($username){
 		return preg_match('/^[A-Z0-9]{2,20}$/i',$username);
 	}
-	 
+
 
 	//return an obj populated based on a user_id
 	public static function getById($user_id){
@@ -80,9 +88,12 @@ class User {
 
 	//save the record to the DB
 	public function save(){
-		if($this->uid)
+		$escaped_username= pg_escape_string($this->username);
+		if($this->username == null) echo "fucking error!";
+
+		if($this->uid != null)
 		{		//if uid exist then update
-			$query=sprintf('UPDATE %s SET USERNAME = %s, PASSWORD ="%s" WHERE USER_ID = %d',
+			$query=sprintf('UPDATE table_register SET username = \'%s\', password =\'%s\' WHERE user_id = %d',
 					Table_REGISTER,
 					pg_escape_string( $GLOBALS['DB'],$this->username),
 					pg_escape_string($GLOBALS['DB'],$this->password),
@@ -92,13 +103,14 @@ class User {
 		else
 		{				//if user doesn't exist(not registered yet) then insert
 			$query=sprintf
-			('INSERT INTO Table_REGISTER (USERNAME,PASSWORD) VALUES (/' %s /',/' %s /') WHERE USER_ID = %d',
-					pg_escape_string( $GLOBALS['DB'],$this->username),
-					pg_escape_string($GLOBALS['DB'],$this->password),
-					$this->uid
+			('INSERT INTO table_register (username,password) VALUES (\'%s\',\'%s\')',
+					pg_escape_string($this->username),
+					pg_escape_string($this->password)
+
 			);
 			if(pg_query($GLOBALS['DB'],$query)){
-				$this->uid=pg_insert_id($GLOBALS['DB']);
+				//successfully inserted
+				echo $this->username;
 				return true;
 			} else
 				return false;
