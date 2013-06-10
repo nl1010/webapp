@@ -1,5 +1,5 @@
 //This file defines the components
-//that will be used in the game. ie trees
+//that will be used in the game. ie trees, water
 
 // The Grid component allows an element to be located
 //  on a grid of tiles
@@ -35,6 +35,21 @@ Crafty.c('Grid',
   	}
 });
 
+/*
+Crafty.c('Sidebar',
+{
+  init: function()
+  {
+    this.requires('Grid');
+    Crafty.e('2D, DOM, Text')
+    .attr({ x: Game.menu_width()+10, 
+            y: Game.height() })
+    .text('Wood: ')
+    .css($text_css);
+  },
+});
+*/
+
 //An Actor is an entitiy that is drawn 
 //in 2D on canvas via our logical coordinate grid
 Crafty.c('Actor',
@@ -54,21 +69,21 @@ Crafty.c('Grass',
 	},
 });
 
-//Now trees and bushes can be defined 
+//Now water and trees can be defined 
 //using Actor, just change the color
-Crafty.c('Tree', 
+Crafty.c('Water', 
 {
 	init: function() 
 	{
-    	this.requires('Actor, Solid, spr_tree');
+    	this.requires('Actor, Solid, spr_water');
   	},
 });
  
-Crafty.c('Bush', 
+Crafty.c('Tree', 
 {
   	init: function() 
   	{
-    	this.requires('Actor, Solid, spr_bush');
+    	this.requires('Actor, Solid, spr_tree');
   	},
 });
 
