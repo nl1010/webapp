@@ -92,7 +92,7 @@ Crafty.c('Wizard',
 	init: function()
 	{
 		this.requires('Actor, Fourway, Collision, spr_player')
-		.fourway(3)
+		.fourway(1.5)
 		//collision handling
 		.stopOnSolids()
 		.onHit('Village', this.visitVillage);
