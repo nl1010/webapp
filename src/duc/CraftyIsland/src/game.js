@@ -1,9 +1,14 @@
 Game = 
 {
+    //menu, resource bar
+    menu: 
+    {
+        width: 18
+    },
     //Grids
     map_grid:
     {
-        width: 32,
+        width: 32+18,
         height: 32,
         //tile size
         tile:
@@ -28,13 +33,18 @@ Game =
                 * this.map_grid.tile.height;
     },
 
+    menu_width: function()
+    {
+        return (this.map_grid.width-18)
+                * this.map_grid.tile.width;
+    },
 
     // Initialize and start our game
     start: function() 
     {
         // Start crafty and set a background color so that we can see it's working
         Crafty.init(Game.width(), Game.height());
-        Crafty.background('rgb(250, 250, 250)');
+        Crafty.background('rgb(0, 0, 255)');
 
         //Set this thing to be scene 'Game'
         //All scenes will be in scenes.js
@@ -44,4 +54,7 @@ Game =
     }
 }
 
-$text_css = { 'font-size': '24px', 'font-family': 'Arial', 'color': 'white', 'text-align': 'center' }
+$text_css = { 'font-size': '24px', 
+            'font-family': 'Arial', 
+            'color': 'white', 
+            'text-align': 'center' }
