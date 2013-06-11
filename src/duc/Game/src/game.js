@@ -8,8 +8,8 @@ Game =
     //Grids
     map_grid:
     {
-        width: 56+18,
-        height: 56,
+        width: 36+10,
+        height: 36,
         //tile size
         tile:
         {
@@ -35,7 +35,7 @@ Game =
 
     menu_width: function()
     {
-        return (this.map_grid.width-18)
+        return (this.map_grid.width-10)
                 * this.map_grid.tile.width;
     },
 
@@ -44,7 +44,7 @@ Game =
     {
         // Start crafty and set a background color so that we can see it's working
         Crafty.init(Game.width(), Game.height());
-        Crafty.background('rgb(0, 0, 255)');
+        Crafty.background('rgb(0, 0, 0)');
 
         //Set this thing to be scene 'Game'
         //All scenes will be in scenes.js
@@ -55,6 +55,6 @@ Game =
 }
 
 $text_css = { 'font-size': '24px', 
-            'font-family': 'Arial', 
+            'font-family': 'Monospace', 
             'color': 'white', 
             'text-align': 'center' }
