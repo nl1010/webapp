@@ -120,7 +120,8 @@ class User {
 			}
 		}
 		$user_id=$user->uid;
-		echo "login successful,your user id is ".$user_id." . jump to game page </br>";
+		//echo "login successful,your user id is ".$user_id." . jump to game page </br>";
+		echo $user_id;
 		return $user_id;
 		
 	}
