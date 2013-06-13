@@ -1,3 +1,18 @@
+
+function readCookie(name) {
+  var ca = document.cookie.split(';');
+  var nameEQ = name + "=";
+  for(var i=0; i < ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0)==' ') c = c.substring(1, c.length); //delete spaces
+    if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+    }
+  return "";
+}
+
+$user_id =readCookie("userid");
+//-------------above is prototype cookie reading function-------------------------------
+
 Crafty.scene('Game', function() 
 {
 
@@ -33,6 +48,11 @@ Crafty.scene('Game', function()
   .text('Soul: ')
   .css($text_css);
 
+   Crafty.e('2D, DOM, Text')
+  .attr({ x: Game.menu_width()+4, 
+    y: 160 })
+  .text('ID: '+$user_id)
+  .css($text_css);
 
 //Items------------------------------
 //Message
