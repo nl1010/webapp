@@ -10,8 +10,8 @@
     }
 
 //create cookies--move this to the right position
-    createCookie("x",this.x,1);
-    createCookie("y",this.y,1);
+    createCookie("x",this.x/Game.map_grid.tile.width,1);
+    createCookie("y",this.y/Game.map_grid.tile.height,1);
 // The Grid component allows an element to be located
 //  on a grid of tiles
 Crafty.c('Grid',
