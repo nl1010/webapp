@@ -1,36 +1,36 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>The Island</title>
-<style>
-body,html {
-	margin: 0;
-	padding: 0;
-	overflow: hidden;
-	font-family: Monospace;
-	font-size: 20px
-}
+  <meta charset="utf-8">
+  <title>The Island</title>
+  <style>
+  body,html {
+   margin: 0;
+   padding: 0;
+   overflow: hidden;
+   font-family: Monospace;
+   font-size: 20px
+ }
 
-#cr-stage {
-	border: 2px solid black;
-	margin: 5px auto;
-	color: white
-}
-</style>
-<script type="text/javascript"
-	src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
-<script src="Library/crafty.js"></script>
-<script src="Library/tiledmapbuilder.js"></script>
-<script src="assets/map/demo_map2.js"></script>
-<script src="modules/create_mocks_module.js"></script>
-<script src="js/game.js"></script>
-<script src="js/components.js"></script>
-<script src="js/scenes.js"></script>
-<script src="Library/cookie.js"></script>
-<script>
-	window.addEventListener('load', Game.start);
-</script>
+ #cr-stage {
+   border: 2px solid black;
+   margin: 5px auto;
+   color: white
+ }
+ </style>
+ <script type="text/javascript"
+ src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
+ <script src="Library/crafty.js"></script>
+ <script src="Library/tiledmapbuilder.js"></script>
+ <script src="assets/map/demo_map2.js"></script>
+ <script src="modules/create_mocks_module.js"></script>
+ <script src="js/game.js"></script>
+ <script src="js/components.js"></script>
+ <script src="js/scenes.js"></script>
+ <script src="Library/cookie.js"></script>
+ <script>
+ window.addEventListener('load', Game.start);
+ </script>
 
 </head>
 
@@ -52,12 +52,12 @@ body,html {
 			$('div#message_display').text(data);
 		});
 		
-	       Crafty.e('Message')
-	        .attr({x:x*16, y:y*16-1}); 
+    Crafty.e('Message')
+    .attr({x:x*16, y:y*16}); 
 
-	});
-</script>
-	<div id="message_display">message_display_area</div>
+  });
+  </script>
+  <div id="message_display">message_display_area</div>
 </body>
 
 
