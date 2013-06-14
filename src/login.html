@@ -22,6 +22,7 @@
 	</div>
 
 	<script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
+	<script src="Library/cookie.js"></script>
 	<script type="text/javascript">
 		$('input#submit').on('click', function() {
 			var username = $('input#username').val();
@@ -41,15 +42,7 @@
 		});
 		
 //create cookie to store ID 
-		function createCookie(name, value, days) {
-		  if (days) {
-		    var date = new Date();
-		    date.setTime(date.getTime()+(days*24*60*60*1000));
-		    var expires = "; expires="+date.toGMTString();
-		    }
-		  else var expires = "";
-		  document.cookie = name+"="+value+expires+"; path=/";
-		}
+	
 
 	</script>
 </body>

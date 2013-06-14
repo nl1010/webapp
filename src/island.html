@@ -18,7 +18,7 @@ body,html {
 	color: white
 }
 </style>
-
+<script type="text/javascript" src = "http://code.jquery.com/jquery-2.0.2.min.js"></script>
 <script src="Library/crafty.js"></script>
 <script src="Library/tiledmapbuilder.js"></script>
 <script src="assets/map/demo_map.js"></script>
@@ -29,12 +29,18 @@ body,html {
 <script>
 	window.addEventListener('load', Game.start);
 </script>
+<script type="text/javascript">
+	$('input#msg_box');
+</script>
 </head>
 
 <body>
 	<div>
-		Input msg, press 'M' to create Message <input type="text" id="msg_box">
-		<div>
+		Input msg, press 'M' to create Message 
+		<input type="text" id="msg_box">
+	<div>
+	<div id="message_display"> message_display_area
+	</div>
 </body>
 
 
