@@ -193,8 +193,8 @@ Crafty.c("PlayerControls",
       if(this._keys[e.key]) 
       {
         //create cookies--move this to the right position
-        createCookie("x",this.x/Game.map_grid.tile.width,1);
-        createCookie("y",this.y/Game.map_grid.tile.height,1);
+        createCookie("x",parseInt(this.x/Game.map_grid.tile.width),1);
+        createCookie("y",parseInt(this.y/Game.map_grid.tile.height),1);
         var direction = this._keys[e.key];
 
         this.trigger('Slide',direction);
