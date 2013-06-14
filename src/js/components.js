@@ -72,17 +72,26 @@ Crafty.c('Obstacle',
 {
   init: function()
   {
-    this.requires('Actor,Collision');
+    this.requires('Actor, Collision');
   }
 });
 
 /*Resources-------------------------------------------------------*/
 /*----------------------------------------------------------------*/
-Crafty.c("Trees",
+
+Crafty.c("Resources",
 {
   init: function()
   {
     this.requires('Obstacle');
+  }
+});
+
+Crafty.c("Trees",
+{
+  init: function()
+  {
+    this.requires('Resources');
   }
 });
 
@@ -90,7 +99,7 @@ Crafty.c("Stones",
 {
   init: function()
   {
-    this.requires('Obstacle');
+    this.requires('Resources');
   }
 });
 
@@ -98,7 +107,7 @@ Crafty.c("Iron",
 {
   init: function()
   {
-    this.requires('Obstacle');
+    this.requires('Resources');
   }
 });
 
@@ -106,7 +115,7 @@ Crafty.c("Crystal",
 {
   init: function()
   {
-    this.requires('Obstacle');
+    this.requires('Resources');
   }
 });
 
@@ -129,10 +138,23 @@ Crafty.c("Messaging",
       if (e.key == Crafty.keys['M'])
       {
         //TODO: msging
-        var msg_value = document.getElementById('msg_box').value;
+        //var msg_value = document.getElementById('msg_box').value;
 
-        Crafty.e('Message')
-        .attr({x:this.x, y:this.y})
+
+        //Crafty.e('Message')
+        //.attr({x:this.x, y:this.y});
+
+        var message = $('input#msg_box').val();
+        var x = readCookie('x');
+        var y = readCookie('y');
+        $.post('PHP/leave_message.php', {
+          message : message,
+          x : x,
+          y : y
+        }, function(data) {
+          $('div#message_display').text(data);
+        });
+
       }
     });
   },
@@ -148,12 +170,32 @@ Crafty.c('Message',
 
 Crafty.c('Wizard',
 {
-	init: function()
-	{
-		this.requires('Actor, PlayerControls, Slide, spr_player, Messaging')
+  init: function()
+  {
+    this.indicator = Crafty.e('2D, DOM, Text')
+    .attr({ x: Game.menu_width()+4, 
+      y: 192 })
+    .text('')
+    .css($text_css);
+
+    this.requires('Actor, PlayerControls, Slide, spr_player, Messaging')
 		//collision handling
-		.stopOnSolids()
-	},
+    this.collectResources();
+    this.stopOnSolids();
+  },
+
+  collectResources: function()
+  {
+    this.addComponent('Collision')
+    .onHit('Resources', function(obj)
+    {
+      this.indicator = Crafty.e('2D, DOM, Text')
+      .attr({ x: Game.menu_width()+4, 
+        y: 192 })
+      .text('Yes')
+      .css($text_css);
+    });
+  },
 
 	//if onHit, stopMovement
 	stopOnSolids: function()
@@ -163,7 +205,7 @@ Crafty.c('Wizard',
     {
       this.cancelSlide();
     });
-  },
+  }
 });
 
 //Controls
@@ -198,14 +240,19 @@ Crafty.c("PlayerControls",
         var direction = this._keys[e.key];
 
         this.trigger('Slide',direction);
+
+        Crafty(this.indicator[0]).text = 'eh';
+
         Crafty.trigger('Turn');
       }
     })
   }
 });
 
-Crafty.c("Slide", {
-  init: function() {
+Crafty.c("Slide", 
+{
+  init: function() 
+  {
     this._stepFrames = 5;
     this._tileSize = 16;
     this._moving = false;
@@ -254,13 +301,16 @@ Crafty.c("Slide", {
       });
 
     }, 
-    slideFrames: function(frames) { 
+
+    slideFrames: function(frames) 
+    { 
      this._stepFrames = frames;
    },
 
     // A function we'll use later to 
     // cancel our movement and send us back to where we started
-    cancelSlide: function() {
+    cancelSlide: function() 
+    {
       this.x = this._sourceX;
       this.y = this._sourceY;
       this._moving = false;

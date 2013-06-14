@@ -55,13 +55,6 @@ Crafty.scene('Game', function()
   .text('ID: '+$user_id)
   .css($text_css);
 
-  //indicate the resource that is touching character
-  Crafty.e('2D, DOM, Text')
-  .attr({ x: Game.menu_width()+4, 
-    y: 192 })
-  .text('t: ')
-  .css($text_css);
-
   //Button
   /*
   Crafty.e("2D, DOM, Image, msg_button")
@@ -75,28 +68,19 @@ Crafty.scene('Game', function()
 // MAP DRAWING
 // -----------
 
-  Crafty.e("2D,DOM,TiledMapBuilder")
+Crafty.e("2D,DOM,TiledMapBuilder")
   //set data source
   .setMapDataSource(SOURCE_FROM_TILED_MAP_EDITOR)
   //create world
   .createWorld(function(tiledmap)
   {
-    //water
-    for (var water = 0; 
-      water < tiledmap.getEntitiesInLayer('Water').length;
-      water++)
-    {
-      tiledmap.getEntitiesInLayer('Water')[water]
-      .addComponent("Water");
-    }
-
     //obstacles
     for (var obstacle = 0; 
       obstacle < tiledmap.getEntitiesInLayer('Obstacle').length;
       obstacle++)
     {
       tiledmap.getEntitiesInLayer('Obstacle')[obstacle]
-      .addComponent("Collision")
+      .addComponent('Collision')
       .collision();
     } 
 
