@@ -194,7 +194,8 @@ Crafty.scene('Loading', function()
   Crafty.load(['assets/spr.png',
     'assets/ground.png',
     'assets/obstacles.png',
-    'assets/water.png'], function()
+    'assets/water.png',
+    'assets/spr2.png'], function()
     {
     // Once the image is loaded...
 
@@ -209,9 +210,14 @@ Crafty.scene('Loading', function()
       //spr_water:   [0, 68],
       //spr_tree:    [0, 66],
       //spr_village: [0, 62],
-      spr_scroll: [0, 46],
-      spr_player:  [0, 70],
+      spr_scroll: [0, 46]
+      //spr_player:  [0, 70],
       //spr_grass:   [0, 36]
+    });
+
+    Crafty.sprite(16, 'assets/spr2.png',
+    {
+      spr_player: [0, 18]
     });
 
     alert("Welcome to the Island!");    
