@@ -62,7 +62,7 @@ Crafty.scene('Game', function()
   .css($text_css);
 
   //Button
-  Crafty.e("2D, DOM, Image, button")
+  Crafty.e("2D, DOM, Image, msg_button")
   .attr({ x: Game.menu_width()+4, 
     y: 224 })
   .areaMap([0,0],[128,0],[128,45],[0,45]);
@@ -157,6 +157,7 @@ Crafty.scene('Loading', function()
       //spr_water:   [0, 68],
       //spr_tree:    [0, 66],
       //spr_village: [0, 62],
+      spr_scroll: [0, 46],
       spr_player:  [0, 70],
       //spr_grass:   [0, 36]
     });

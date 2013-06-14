@@ -32,7 +32,7 @@ Crafty.c('Grid',
       }
     });
 
-Crafty.c("button", 
+Crafty.c("msg_button", 
 {
   _func: null,
   init: function() 
@@ -42,7 +42,6 @@ Crafty.c("button",
     this.bind('Click', function()
     {
       alert("Clicked!");
-      //TODO: accept message from text box
     })
   },
 });
@@ -55,11 +54,19 @@ Crafty.c('Actor',
 	},
 });
 
+Crafty.c('Message',
+{
+  init: function()
+  {
+    this.requires('Actor, spr_scroll');
+  },
+});
+
 Crafty.c('Wizard',
 {
 	init: function()
 	{
-		this.requires('Actor, PlayerControls, Slide, spr_player')
+		this.requires('Actor, PlayerControls, Slide, spr_player, Messaging')
 		//collision handling
 		.stopOnSolids()
 	},
@@ -71,6 +78,23 @@ Crafty.c('Wizard',
     .onHit('Obstacle', function(obj)
     {
       this.cancelSlide();
+    });
+  },
+});
+
+Crafty.c("Messaging",
+{
+  init: function()
+  {
+    this.bind('KeyDown', function(e)
+    {
+      if (e.key == Crafty.keys['M'])
+      {
+        Crafty.e('Message')
+        .attr({x:this.x, y:this.y});
+        alert("position: "+this.x+" "+this.y);
+        //TODO: msging
+      }
     });
   },
 });
