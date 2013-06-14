@@ -1,17 +1,15 @@
 //--import function
-    function createCookie(name, value, days) {
-      if (days) {
-        var date = new Date();
-        date.setTime(date.getTime()+(days*24*60*60*1000));
-        var expires = "; expires="+date.toGMTString();
-        }
-      else var expires = "";
-      document.cookie = name+"="+value+expires+"; path=/";
-    }
+function createCookie(name, value, days) 
+{
+  if (days) {
+    var date = new Date();
+    date.setTime(date.getTime()+(days*24*60*60*1000));
+    var expires = "; expires="+date.toGMTString();
+  }
+  else var expires = "";
+  document.cookie = name+"="+value+expires+"; path=/";
+}
 
-//create cookies--move this to the right position
-    createCookie("x",this.x/Game.map_grid.tile.width,1);
-    createCookie("y",this.y/Game.map_grid.tile.height,1);
 // The Grid component allows an element to be located
 //  on a grid of tiles
 Crafty.c('Grid',
@@ -133,6 +131,7 @@ Crafty.c("PlayerControls",
 
     for(var k in this._keys) 
     {
+
       var keyCode = Crafty.keys[k] || k;
       this._keys[keyCode] = this._keys[k];
     }
@@ -141,6 +140,9 @@ Crafty.c("PlayerControls",
     {
       if(this._keys[e.key]) 
       {
+        //create cookies--move this to the right position
+        createCookie("x",this.x/Game.map_grid.tile.width,1);
+        createCookie("y",this.y/Game.map_grid.tile.height,1);
         var direction = this._keys[e.key];
 
         this.trigger('Slide',direction);
