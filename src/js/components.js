@@ -140,9 +140,8 @@ Crafty.c("Messaging",
         //TODO: msging
         //var msg_value = document.getElementById('msg_box').value;
 
-
-        //Crafty.e('Message')
-        //.attr({x:this.x, y:this.y});
+        Crafty.e('Message')
+        .attr({x:this.x, y:this.y});
 
         var message = $('input#msg_box').val();
         var x = readCookie('x');
@@ -189,11 +188,10 @@ Crafty.c('Wizard',
     this.addComponent('Collision')
     .onHit('Resources', function(obj)
     {
-      this.indicator = Crafty.e('2D, DOM, Text')
-      .attr({ x: Game.menu_width()+4, 
-        y: 192 })
-      .text('Yes')
-      .css($text_css);
+      Crafty(this.indicator[0]).text = "lol";
+    }, function(obj)
+    {
+      Crafty(this.indicator[0]).text = "yes";
     });
   },
 
@@ -235,9 +233,11 @@ Crafty.c("PlayerControls",
       if(this._keys[e.key]) 
       {
         //create cookies--move this to the right position
+        var direction = this._keys[e.key];
         createCookie("x",parseInt(this.x/Game.map_grid.tile.width),1);
         createCookie("y",parseInt(this.y/Game.map_grid.tile.height),1);
-        var direction = this._keys[e.key];
+        createCookie("direction",direction,1);
+
 
         this.trigger('Slide',direction);
 
