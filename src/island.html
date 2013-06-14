@@ -51,6 +51,10 @@ body,html {
 		}, function(data) {
 			$('div#message_display').text(data);
 		});
+		
+	       Crafty.e('Message')
+	        .attr({x:x*16, y:y*16-1}); 
+
 	});
 </script>
 	<div id="message_display">message_display_area</div>
