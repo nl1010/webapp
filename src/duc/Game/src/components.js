@@ -32,6 +32,21 @@ Crafty.c('Grid',
       }
     });
 
+Crafty.c("button", 
+{
+  _func: null,
+  init: function() 
+  {
+    this.requires("2D, DOM, Images, Mouse");
+    this.image("assets/button.png","no-repeat");
+    this.bind('Click', function()
+    {
+      alert("Clicked!");
+      //TODO: accept message from text box
+    })
+  },
+});
+
 Crafty.c('Actor',
 {
 	init: function()
@@ -53,11 +68,11 @@ Crafty.c('Wizard',
 	stopOnSolids: function()
 	{
 		this.addComponent('Collision')
-        .onHit('Obstacle', function(obj)
-        {
-          this.cancelSlide();
-        });
-	},
+    .onHit('Obstacle', function(obj)
+    {
+      this.cancelSlide();
+    });
+  },
 });
 
 //Controls
@@ -103,7 +118,8 @@ Crafty.c("Slide", {
     this._vy = 0; this._destY = 0; this._sourceY = 0;
     this._frames = 0;
 
-    this.bind("Slide", function(direction) {
+    this.bind("Slide", function(direction) 
+    {
         // Don't continue to slide if we're already moving
         if(this._moving) return false;
         this._moving = true;
@@ -122,7 +138,8 @@ Crafty.c("Slide", {
         this._vy = direction[1] * this._tileSize / this._stepFrames;
 
         this._frames = this._stepFrames;
-      }).bind("EnterFrame",function(e) {
+      }).bind("EnterFrame",function(e) 
+      {
         if(!this._moving) return false;
 
         // If we'removing, update our position by our per-frame velocity
@@ -130,7 +147,8 @@ Crafty.c("Slide", {
         this.y += this._vy;
         this._frames--;
 
-        if(this._frames == 0) {
+        if(this._frames == 0) 
+        {
           // If we've run out of frames,
           // move us to our destination to avoid rounding errors.
           this._moving = false;

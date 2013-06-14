@@ -6,7 +6,7 @@ function readCookie(name) {
     var c = ca[i];
     while (c.charAt(0)==' ') c = c.substring(1, c.length); //delete spaces
     if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-    }
+  }
   return "";
 }
 
@@ -48,11 +48,24 @@ Crafty.scene('Game', function()
   .text('Soul: ')
   .css($text_css);
 
-   Crafty.e('2D, DOM, Text')
+  Crafty.e('2D, DOM, Text')
   .attr({ x: Game.menu_width()+4, 
     y: 160 })
   .text('ID: '+$user_id)
   .css($text_css);
+
+  //indicate the resource that is touching character
+  Crafty.e('2D, DOM, Text')
+  .attr({ x: Game.menu_width()+4, 
+    y: 192 })
+  .text('t: ')
+  .css($text_css);
+
+  //Button
+  Crafty.e("2D, DOM, Image, button")
+  .attr({ x: Game.menu_width()+4, 
+    y: 224 })
+  .areaMap([0,0],[128,0],[128,45],[0,45]);
 
 //Items------------------------------
 //Message
@@ -61,18 +74,18 @@ Crafty.scene('Game', function()
 // MAP DRAWING
 // -----------
 
-  Crafty.e("2D,DOM,TiledMapBuilder")
-  .setMapDataSource(SOURCE_FROM_TILED_MAP_EDITOR)
-  .createWorld(function(tiledmap)
-  {
+Crafty.e("2D,DOM,TiledMapBuilder")
+.setMapDataSource(SOURCE_FROM_TILED_MAP_EDITOR)
+.createWorld(function(tiledmap)
+{
     //water
     for (var water = 0; 
       water < tiledmap.getEntitiesInLayer('Water').length;
       water++)
     {
       tiledmap.getEntitiesInLayer('Water')[water]
-        .addComponent("Collision,Water")
-        .collision();
+      .addComponent("Collision,Water")
+      .collision();
     }
 
     //obstacles
@@ -81,16 +94,16 @@ Crafty.scene('Game', function()
       obstacle++)
     {
       tiledmap.getEntitiesInLayer('Obstacle')[obstacle]
-        .addComponent("Collision, Obstacle")
-        .collision();
+      .addComponent("Collision, Obstacle")
+      .collision();
     } 
     //ground
     
   });
   //Hero
-    this.player = Crafty.e('Wizard')
-      .attr({x:304, y:256});
-    
+  this.player = Crafty.e('Wizard')
+  .attr({x:304, y:256});
+
 });
 // Victory Scene
 // -------------
@@ -127,10 +140,10 @@ Crafty.scene('Loading', function()
 
   // Load our sprite map image
   Crafty.load(['assets/spr.png',
-                'assets/ground.png',
-                'assets/obstacles.png',
-                'assets/water.png'], function()
-  {
+    'assets/ground.png',
+    'assets/obstacles.png',
+    'assets/water.png'], function()
+    {
     // Once the image is loaded...
 
     // Define the individual sprites in the image
