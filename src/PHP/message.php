@@ -33,7 +33,7 @@ Class Message{
 	
 	public function __get_message($x,$y){
 		$query = sprintf('
-				SELECT message FROM message_table WHERE x=\'%x\' y=\'%y\' 
+				SELECT message FROM table_message WHERE x=\'%x\' y=\'%y\' 
 				');
 		$result = pg_query($GLOBALS['DB'],$query);
 		if(pg_num_rows($result)!=0){
@@ -43,6 +43,16 @@ Class Message{
 		}else return false ; #message doesn't exist
 	}
 	
+	public function __store_message($x,$y,$message){
+		$query=sprintf('INSERT INTO table_message (x,y,message) VALUES (\'%d\',\'%d\',\'%s\')',
+						pg_escape_string($x),
+						pg_escape_string($y),
+						pg_escape_string($message)
+				);
+		if(pg_query($GLOBALS["DB"],$query)){
+			echo $message;
+		}else echo "something wrong";
+	}
 	
 }
 

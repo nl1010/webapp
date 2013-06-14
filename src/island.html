@@ -18,7 +18,8 @@ body,html {
 	color: white
 }
 </style>
-<script type="text/javascript" src = "http://code.jquery.com/jquery-2.0.2.min.js"></script>
+<script type="text/javascript"
+	src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
 <script src="Library/crafty.js"></script>
 <script src="Library/tiledmapbuilder.js"></script>
 <script src="assets/map/demo_map2.js"></script>
@@ -26,21 +27,33 @@ body,html {
 <script src="js/game.js"></script>
 <script src="js/components.js"></script>
 <script src="js/scenes.js"></script>
+<script src="Library/cookie.js"></script>
 <script>
 	window.addEventListener('load', Game.start);
 </script>
-<script type="text/javascript">
-	$('input#msg_box');
-</script>
+
 </head>
 
 <body>
 	<div>
-		Input msg, press 'M' to create Message 
-		<input type="text" id="msg_box">
-	<div>
-	<div id="message_display"> message_display_area
+		Input msg, press 'M' to create Message <input type="text" id="msg_box">
+		<input type="submit" id="submit" value="sent">
 	</div>
+	<script type="text/javascript">
+	$('input#submit').on('click', function() {
+		var message = $('input#msg_box').val();
+		var x = readCookie('x');
+		var y = readCookie('y');
+		$.post('PHP/leave_message.php', {
+			message : message,
+			x : x,
+			y : y
+		}, function(data) {
+			$('div#message_display').text(data);
+		});
+	});
+</script>
+	<div id="message_display">message_display_area</div>
 </body>
 
 
