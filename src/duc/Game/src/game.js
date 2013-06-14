@@ -51,6 +51,16 @@ Game =
 
         //Actually start by the Loading scene
         Crafty.scene('Loading');
+
+        //Creating text boxes, Advices and stuff
+        var box = document.createElement('input');
+        box.style.position = 'absolute';
+        box.style.left = '16px';
+        box.style.top = '632px';
+
+        //add those in order
+        document.body.appendChild(msg_tut);
+        document.body.appendChild(box);
     }
 }
 

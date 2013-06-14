@@ -62,10 +62,12 @@ Crafty.scene('Game', function()
   .css($text_css);
 
   //Button
+  /*
   Crafty.e("2D, DOM, Image, msg_button")
   .attr({ x: Game.menu_width()+4, 
     y: 224 })
   .areaMap([0,0],[128,0],[128,45],[0,45]);
+  */
 
 //Items------------------------------
 //Message
@@ -162,7 +164,7 @@ Crafty.scene('Loading', function()
       //spr_grass:   [0, 36]
     });
 
-    
+    alert("Welcome to the Island!");    
     // Now that our sprites are ready to draw, start the game
     Crafty.scene('Game');
   })

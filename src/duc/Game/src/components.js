@@ -32,6 +32,7 @@ Crafty.c('Grid',
       }
     });
 
+/*
 Crafty.c("msg_button", 
 {
   _func: null,
@@ -45,6 +46,7 @@ Crafty.c("msg_button",
     })
   },
 });
+*/
 
 Crafty.c('Actor',
 {
@@ -52,6 +54,25 @@ Crafty.c('Actor',
 	{
 		this.requires('2D, DOM, Grid');
 	},
+});
+
+Crafty.c("Messaging",
+{
+  init: function()
+  {
+    this.bind('KeyDown', function(e)
+    {
+      if (e.key == Crafty.keys['M'])
+      {
+        //TODO: msging
+        var msg_value = document.getElementById('msg_box').value;
+
+        Crafty.e('Message')
+        .attr({x:this.x, y:this.y})
+        .msg(msg_value);
+      }
+    });
+  },
 });
 
 Crafty.c('Message',
@@ -78,23 +99,6 @@ Crafty.c('Wizard',
     .onHit('Obstacle', function(obj)
     {
       this.cancelSlide();
-    });
-  },
-});
-
-Crafty.c("Messaging",
-{
-  init: function()
-  {
-    this.bind('KeyDown', function(e)
-    {
-      if (e.key == Crafty.keys['M'])
-      {
-        Crafty.e('Message')
-        .attr({x:this.x, y:this.y});
-        alert("position: "+this.x+" "+this.y);
-        //TODO: msging
-      }
     });
   },
 });
