@@ -83,7 +83,6 @@ Crafty.c("Messaging",
 
         Crafty.e('Message')
         .attr({x:this.x, y:this.y})
-        .msg(msg_value);
       }
     });
   },
