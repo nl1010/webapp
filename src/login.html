@@ -34,13 +34,13 @@
 				if (userid <9999){
 					$('div#respons').text("Login successful with user ID "+userid);
 					createCookie("userid",userid,1);
-					document.location.href="duc/Game/island.html";
+					document.location.href="island.html";
 					}
 				else $('div#respons').text(data);
 			});
 		});
 		
-
+//create cookie to store ID 
 		function createCookie(name, value, days) {
 		  if (days) {
 		    var date = new Date();
