@@ -17,7 +17,7 @@ Crafty.scene('Game', function()
 {
 
   //Side Bar---------------------------
-/*----------------------------------------------------------------*/
+  /*----------------------------------------------------------------*/
   //Resources:
   Crafty.e('2D, DOM, Text')
   .attr({ x: Game.menu_width()+4, 
@@ -70,23 +70,24 @@ Crafty.scene('Game', function()
   .areaMap([0,0],[128,0],[128,45],[0,45]);
   */
 
-/*----------------------------------------------------------------*/
+  /*----------------------------------------------------------------*/
 
 // MAP DRAWING
 // -----------
 
-Crafty.e("2D,DOM,TiledMapBuilder")
-.setMapDataSource(SOURCE_FROM_TILED_MAP_EDITOR)
-.createWorld(function(tiledmap)
-{
+  Crafty.e("2D,DOM,TiledMapBuilder")
+  //set data source
+  .setMapDataSource(SOURCE_FROM_TILED_MAP_EDITOR)
+  //create world
+  .createWorld(function(tiledmap)
+  {
     //water
     for (var water = 0; 
       water < tiledmap.getEntitiesInLayer('Water').length;
       water++)
     {
       tiledmap.getEntitiesInLayer('Water')[water]
-      .addComponent("Collision,Water")
-      .collision();
+      .addComponent("Water");
     }
 
     //obstacles
@@ -95,12 +96,62 @@ Crafty.e("2D,DOM,TiledMapBuilder")
       obstacle++)
     {
       tiledmap.getEntitiesInLayer('Obstacle')[obstacle]
-      .addComponent("Collision, Obstacle")
+      .addComponent("Collision")
       .collision();
     } 
-    //ground
+
+    //Trees
+    for (var tree = 0; 
+      tree < tiledmap.getEntitiesInLayer('Trees').length;
+      tree++)
+    {
+      tiledmap.getEntitiesInLayer('Trees')[tree]
+      .addComponent("Collision")
+      .collision();
+    }
+
+    //Stones
+    for (var stone = 0; 
+      stone < tiledmap.getEntitiesInLayer('Stones').length;
+      stone++)
+    {
+      tiledmap.getEntitiesInLayer('Stones')[stone]
+      .addComponent("Collision")
+      .collision();
+    }
+
+    //Iron
+    for (var iron = 0; 
+      iron < tiledmap.getEntitiesInLayer('Iron').length;
+      iron++)
+    {
+      tiledmap.getEntitiesInLayer('Iron')[iron]
+      .addComponent("Collision")
+      .collision();
+    }
+    
+    //Crystal
+    for (var crystal = 0; 
+      crystal < tiledmap.getEntitiesInLayer('Crystal').length;
+      crystal++)
+    {
+      tiledmap.getEntitiesInLayer('Crystal')[crystal]
+      .addComponent("Collision")
+      .collision();
+    }
+    
+    //Monsters
+    for (var monster = 0; 
+      monster < tiledmap.getEntitiesInLayer('Monsters').length;
+      monster++)
+    {
+      tiledmap.getEntitiesInLayer('Monsters')[monster]
+      .addComponent("Collision")
+      .collision();
+    }
     
   });
+
   //Hero
   this.player = Crafty.e('Wizard')
   .attr({x:304, y:256});
