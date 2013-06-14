@@ -68,6 +68,58 @@ Crafty.c('Actor',
 	},
 });
 
+Crafty.c('Obstacle',
+{
+  init: function()
+  {
+    this.requires('Actor,Collision');
+  }
+});
+
+/*Resources-------------------------------------------------------*/
+/*----------------------------------------------------------------*/
+Crafty.c("Trees",
+{
+  init: function()
+  {
+    this.requires('Obstacle');
+  }
+});
+
+Crafty.c("Stones",
+{
+  init: function()
+  {
+    this.requires('Obstacle');
+  }
+});
+
+Crafty.c("Iron",
+{
+  init: function()
+  {
+    this.requires('Obstacle');
+  }
+});
+
+Crafty.c("Crystal",
+{
+  init: function()
+  {
+    this.requires('Obstacle');
+  }
+});
+
+/*Monsters--------------------------------------------------------*/
+/*----------------------------------------------------------------*/
+Crafty.c("Monsters",
+{
+  init: function()
+  {
+    this.requires('Obstacle');
+  }
+});
+
 Crafty.c("Messaging",
 {
   init: function()

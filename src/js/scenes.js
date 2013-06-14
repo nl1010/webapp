@@ -106,7 +106,7 @@ Crafty.scene('Game', function()
       tree++)
     {
       tiledmap.getEntitiesInLayer('Trees')[tree]
-      .addComponent("Collision, Obstacle")
+      .addComponent("Trees")
       .collision();
     }
 
@@ -116,7 +116,7 @@ Crafty.scene('Game', function()
       stone++)
     {
       tiledmap.getEntitiesInLayer('Stones')[stone]
-      .addComponent("Collision, Obstacle")
+      .addComponent("Stones")
       .collision();
     }
 
@@ -126,7 +126,7 @@ Crafty.scene('Game', function()
       iron++)
     {
       tiledmap.getEntitiesInLayer('Iron')[iron]
-      .addComponent("Collision, Obstacle")
+      .addComponent("Iron")
       .collision();
     }
     
@@ -136,7 +136,7 @@ Crafty.scene('Game', function()
       crystal++)
     {
       tiledmap.getEntitiesInLayer('Crystal')[crystal]
-      .addComponent("Collision, Obstacle")
+      .addComponent("Crystal")
       .collision();
     }
     
@@ -146,7 +146,7 @@ Crafty.scene('Game', function()
       monster++)
     {
       tiledmap.getEntitiesInLayer('Monsters')[monster]
-      .addComponent("Collision, Obstacle")
+      .addComponent("Monsters")
       .collision();
     }
     
