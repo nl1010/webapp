@@ -22,6 +22,7 @@
 	</div>
 
 	<script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
+	<script src="Library/cookie.js"></script>
 	<script type="text/javascript">
 		$('input#submit').on('click', function() {
 			var username = $('input#username').val();
@@ -34,22 +35,14 @@
 				if (userid <9999){
 					$('div#respons').text("Login successful with user ID "+userid);
 					createCookie("userid",userid,1);
-					document.location.href="duc/Game/island.html";
+					document.location.href="island.html";
 					}
 				else $('div#respons').text(data);
 			});
 		});
 		
-
-		function createCookie(name, value, days) {
-		  if (days) {
-		    var date = new Date();
-		    date.setTime(date.getTime()+(days*24*60*60*1000));
-		    var expires = "; expires="+date.toGMTString();
-		    }
-		  else var expires = "";
-		  document.cookie = name+"="+value+expires+"; path=/";
-		}
+//create cookie to store ID 
+	
 
 	</script>
 </body>

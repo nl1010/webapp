@@ -1,3 +1,17 @@
+//--import function
+    function createCookie(name, value, days) {
+      if (days) {
+        var date = new Date();
+        date.setTime(date.getTime()+(days*24*60*60*1000));
+        var expires = "; expires="+date.toGMTString();
+        }
+      else var expires = "";
+      document.cookie = name+"="+value+expires+"; path=/";
+    }
+
+//create cookies--move this to the right position
+    createCookie("x",this.x,1);
+    createCookie("y",this.y,1);
 // The Grid component allows an element to be located
 //  on a grid of tiles
 Crafty.c('Grid',
