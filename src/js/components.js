@@ -133,29 +133,7 @@ Crafty.c("Messaging",
 {
   init: function()
   {
-    this.bind('KeyDown', function(e)
-    {
-      if (e.key == Crafty.keys['M'])
-      {
-        //TODO: msging
-        //var msg_value = document.getElementById('msg_box').value;
 
-        Crafty.e('Message')
-        .attr({x:this.x, y:this.y});
-
-        var message = $('input#msg_box').val();
-        var x = readCookie('x');
-        var y = readCookie('y');
-        $.post('PHP/leave_message.php', {
-          message : message,
-          x : x,
-          y : y
-        }, function(data) {
-          $('div#message_display').text(data);
-        });
-
-      }
-    });
   },
 });
 
