@@ -42,20 +42,22 @@
 	$('input#submit').on('click', function() {
 		var x = readCookie('x');
 		var y = readCookie('y');
-		var message = window.prompt('\n'+'Please type in your message: \n');
-		//var message = $('input#msg_box').val();"/Users/yan/Documents/workspace/MAlice_test2"
-		$.post('PHP/leave_message.php', {
-			message : message,
-			x : x,
-			y : y
-		}, function(data) {
-			//$('div#message_display').text(data);
-			
-			alert("Your message: \n\n"+message+" \n\n has been successfully deployed! \n Now the new message is " + data + '\n');
-		});
-    Crafty.e('Message')
-    .attr({x:x*16, y:y*16}); 
-
+		var message = window.prompt('Please type in your message: \n');
+		if (message != '' ) {
+			$.post('PHP/leave_message.php', {
+				message : message,
+				x : x,
+				y : y
+			}, function(data) {
+				//$('div#message_display').text(data);
+				
+				alert("Your message: \n\n"+message+" \n\n has been successfully deployed! \n Now the new message is " + data + '\n');
+			});
+	   		 Crafty.e('Message')
+	    		.attr({x:x*16, y:y*16}); 
+		} else {
+			alert("Your message cannot be empty");
+		}
   });
   </script>
   <div id="message_display">message_display_area</div>
