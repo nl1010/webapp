@@ -16,44 +16,6 @@ $user_id =readCookie("userid");
 Crafty.scene('Game', function() 
 {
 
-  //Side Bar---------------------------
-  /*----------------------------------------------------------------*/
-  //Resources:
-  Crafty.e('2D, DOM, Text')
-  .attr({ x: Game.menu_width()+4, 
-    y: 0 })
-  .text('Wood: ')
-  .css($text_css);
-
-  Crafty.e('2D, DOM, Text')
-  .attr({ x: Game.menu_width()+4, 
-    y: 32 })
-  .text('Stone: ')
-  .css($text_css);
-
-  Crafty.e('2D, DOM, Text')
-  .attr({ x: Game.menu_width()+4, 
-    y: 64 })
-  .text('Iron: ')
-  .css($text_css);
-
-  Crafty.e('2D, DOM, Text')
-  .attr({ x: Game.menu_width()+4, 
-    y: 96 })
-  .text('Crystal: ')
-  .css($text_css);
-
-  Crafty.e('2D, DOM, Text')
-  .attr({ x: Game.menu_width()+4, 
-    y: 128 })
-  .text('Soul: ')
-  .css($text_css);
-
-  Crafty.e('2D, DOM, Text')
-  .attr({ x: Game.menu_width()+4, 
-    y: 160 })
-  .text('ID: '+$user_id)
-  .css($text_css);
 
   //Button
   /*
@@ -136,9 +98,48 @@ Crafty.e("2D,DOM,TiledMapBuilder")
     
   });
 
-  //Hero
-  this.player = Crafty.e('Wizard')
-  .attr({x:304, y:256});
+//Hero
+this.player = Crafty.e('Wizard')
+.attr({x:304, y:256});
+
+  //Side Bar---------------------------
+  /*----------------------------------------------------------------*/
+  //Resources:
+  Crafty.e('2D, DOM, Text')
+  .attr({ x: Game.menu_width()+4, 
+    y: 0 })
+  .text('Wood: ')
+  .css($text_css);
+
+  Crafty.e('2D, DOM, Text')
+  .attr({ x: Game.menu_width()+4, 
+    y: 32 })
+  .text('Stone: ')
+  .css($text_css);
+
+  Crafty.e('2D, DOM, Text')
+  .attr({ x: Game.menu_width()+4, 
+    y: 64 })
+  .text('Iron: ')
+  .css($text_css);
+
+  Crafty.e('2D, DOM, Text')
+  .attr({ x: Game.menu_width()+4, 
+    y: 96 })
+  .text('Crystal: ')
+  .css($text_css);
+
+  Crafty.e('2D, DOM, Text')
+  .attr({ x: Game.menu_width()+4, 
+    y: 128 })
+  .text('Soul: ')
+  .css($text_css);
+
+  Crafty.e('2D, DOM, Text')
+  .attr({ x: Game.menu_width()+4, 
+    y: 160 })
+  .text('ID: '+$user_id)
+  .css($text_css);
 
 });
 // Victory Scene
@@ -160,6 +161,7 @@ Crafty.scene('Victory', function()
 {
   this.unbind('KeyDown', this.restart_game);
 });
+
 // Loading scene
 // -------------
 // Handles the loading of binary assets such as images and audio files
@@ -204,7 +206,6 @@ Crafty.scene('Loading', function()
       spr_player: [0, 18]
     });
 
-    alert("Welcome to the Island!");    
     // Now that our sprites are ready to draw, start the game
     Crafty.scene('Game');
   })

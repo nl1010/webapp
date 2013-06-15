@@ -169,14 +169,14 @@ Crafty.c('Message',
 
 Crafty.c('Wizard',
 {
+  //resources
+  wood:0,
+  stone:0,
+  iron:0,
+  crystal:0,
+  soul:0,
   init: function()
   {
-    this.indicator = Crafty.e('2D, DOM, Text')
-    .attr({ x: Game.menu_width()+4, 
-      y: 192 })
-    .text('')
-    .css($text_css);
-
     this.requires('Actor, PlayerControls, Slide, spr_player, Messaging')
 		//collision handling
     this.collectResources();
@@ -185,13 +185,13 @@ Crafty.c('Wizard',
 
   collectResources: function()
   {
-    this.addComponent('Collision')
-    .onHit('Resources', function(obj)
+    this.addComponent('Collision');
+    this.onHit('Resources', function(obj)
     {
-      Crafty(this.indicator[0]).text = "lol";
-    }, function(obj)
-    {
-      Crafty(this.indicator[0]).text = "yes";
+      //alert("Trees!");
+      if (obj.has("Trees") == true) alert("Yes");
+      //var choice = confirm("Chop down this tree?");
+      //if (choice==true) this.wood++;
     });
   },
 
@@ -238,11 +238,9 @@ Crafty.c("PlayerControls",
         createCookie("y",parseInt(this.y/Game.map_grid.tile.height),1);
         createCookie("direction",direction,1);
 
-
+        //Trigger the Slide animation
         this.trigger('Slide',direction);
-
-        Crafty(this.indicator[0]).text = 'eh';
-
+        //Ending a 'Turn'
         Crafty.trigger('Turn');
       }
     })
