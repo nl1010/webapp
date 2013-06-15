@@ -166,8 +166,7 @@ Crafty.c('Wizard',
     this.addComponent('Collision');
     this.onHit('Resources', function(obj)
     {
-      //alert("Trees!");
-      if (obj.has("Trees") == true) alert("Yes");
+      if (obj[0].obj.has('Trees')) alert("Trees, chop it");
       //var choice = confirm("Chop down this tree?");
       //if (choice==true) this.wood++;
     });
