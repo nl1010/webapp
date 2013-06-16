@@ -153,22 +153,106 @@ Crafty.c('Wizard',
   iron:0,
   crystal:0,
   soul:0,
+  wood_display:0,
+  stone_display:0,
+  iron_display:0,
+  crystal_display:0,
+  soul_display:0,
+  
   init: function()
   {
     this.requires('Actor, PlayerControls, Slide, spr_player, Messaging')
 		//collision handling
     this.collectResources();
     this.stopOnSolids();
+
+    //creating resource display
+    this.wood_display = Crafty.e('2D, DOM, Text')
+    .attr({ x: Game.menu_width()+36, y: 0 })
+    .css($text_css);
+    this.stone_display = Crafty.e('2D, DOM, Text')
+    .attr({ x: Game.menu_width()+36, y: 32 })
+    .css($text_css);
+    this.iron_display = Crafty.e('2D, DOM, Text')
+    .attr({ x: Game.menu_width()+36, y: 64 })
+    .css($text_css);
+    this.crystal_display = Crafty.e('2D, DOM, Text')
+    .attr({ x: Game.menu_width()+36, y: 96 })
+    .css($text_css);
+    this.soul_display = Crafty.e('2D, DOM, Text')
+    .attr({ x: Game.menu_width()+36, y: 128 })
+    .css($text_css);
+
+    this.display_resources();
+  },
+
+  display_resources: function()
+  {
+    this.wood_display.text(this.wood);
+    this.stone_display.text(this.stone);
+    this.iron_display.text(this.iron);
+    this.crystal_display.text(this.crystal);
+    this.soul_display.text(this.soul);
   },
 
   collectResources: function()
   {
     this.addComponent('Collision');
+    this.onHit('Monsters', function(obj)
+    {
+      var choice = confirm("Fight monster?");
+      if (choice==true) 
+      {
+        alert("The monster crushes your head");
+        Crafty.scene('Lose');
+      }
+
+    });
     this.onHit('Resources', function(obj)
     {
-      if (obj[0].obj.has('Trees')) alert("Trees, chop it");
-      //var choice = confirm("Chop down this tree?");
-      //if (choice==true) this.wood++;
+      if (obj[0].obj.has('Trees'))
+      {
+        var choice = confirm("Chop down this tree?");
+        if (choice==true) 
+        {
+          this.wood++;
+          this.display_resources();
+          obj[0].obj.destroy();
+        }
+      }
+
+      if (obj[0].obj.has('Stones'))
+      {
+        var choice = confirm("Mine stone?");
+        if (choice==true) 
+        {
+          this.stone++;
+          this.display_resources();
+          obj[0].obj.destroy();
+        }
+      }
+
+      if (obj[0].obj.has('Iron'))
+      {
+        var choice = confirm("Mine iron?");
+        if (choice==true) 
+        {
+          this.iron++;
+          this.display_resources();
+          obj[0].obj.destroy();
+        }
+      }
+
+      if (obj[0].obj.has('Crystal'))
+      {
+        var choice = confirm("Mine crystal?");
+        if (choice==true) 
+        {
+          this.crystal++;
+          this.display_resources();
+          obj[0].obj.destroy();
+        }
+      }
     });
   },
 
@@ -241,7 +325,7 @@ Crafty.c("Slide",
         if(this._moving) return false;
         this._moving = true;
 
-        // Let's keep our pre-movement location
+        // keep our pre-movement location
         // Hey, Maybe we'll need it later :)
     this._sourceX = this.x;
     this._sourceY = this.y;
@@ -255,32 +339,31 @@ Crafty.c("Slide",
         this._vy = direction[1] * this._tileSize / this._stepFrames;
 
         this._frames = this._stepFrames;
-      }).bind("EnterFrame",function(e) 
+      }).bind("EnterFrame", function(e) 
       {
         if(!this._moving) return false;
 
-        // If we'removing, update our position by our per-frame velocity
-        this.x += this._vx;
-        this.y += this._vy;
-        this._frames--;
+      // If we'removing, update our position by our per-frame velocity
+      this.x += this._vx;
+      this.y += this._vy;
+      this._frames--;
 
-        if(this._frames == 0) 
-        {
-          // If we've run out of frames,
-          // move us to our destination to avoid rounding errors.
-          this._moving = false;
-          this.x = this._destX;
-          this.y = this._destY;
-        }
-        this.trigger('Moved', {x: this.x, y: this.y});
-      });
-
+      if(this._frames == 0) 
+      {
+        // If we've run out of frames,
+        // move us to our destination to avoid rounding errors.
+        this._moving = false;
+        this.x = this._destX;
+        this.y = this._destY;
+      }
+      this.trigger('Moved', {x: this.x, y: this.y});
+    });
     }, 
 
     slideFrames: function(frames) 
     { 
-     this._stepFrames = frames;
-   },
+      this._stepFrames = frames;
+    },
 
     // A function we'll use later to 
     // cancel our movement and send us back to where we started

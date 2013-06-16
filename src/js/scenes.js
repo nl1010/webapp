@@ -108,31 +108,31 @@ this.player = Crafty.e('Wizard')
   Crafty.e('2D, DOM, Text')
   .attr({ x: Game.menu_width()+4, 
     y: 0 })
-  .text('Wood: ')
+  .text('W: ')
   .css($text_css);
 
   Crafty.e('2D, DOM, Text')
   .attr({ x: Game.menu_width()+4, 
     y: 32 })
-  .text('Stone: ')
+  .text('S: ')
   .css($text_css);
 
   Crafty.e('2D, DOM, Text')
   .attr({ x: Game.menu_width()+4, 
     y: 64 })
-  .text('Iron: ')
+  .text('I: ')
   .css($text_css);
 
   Crafty.e('2D, DOM, Text')
   .attr({ x: Game.menu_width()+4, 
     y: 96 })
-  .text('Crystal: ')
+  .text('C: ')
   .css($text_css);
 
   Crafty.e('2D, DOM, Text')
   .attr({ x: Game.menu_width()+4, 
     y: 128 })
-  .text('Soul: ')
+  .text('S: ')
   .css($text_css);
 
   Crafty.e('2D, DOM, Text')
@@ -209,4 +209,15 @@ Crafty.scene('Loading', function()
     // Now that our sprites are ready to draw, start the game
     Crafty.scene('Game');
   })
+});
+
+//Die Scene
+Crafty.scene('Lose', function()
+{
+  Crafty.e('2D, DOM, Text')
+  .text('YOU DIED!')
+  .attr({ x: 0, 
+    y: Game.height()/2, 
+    w: Game.width() })
+  .css($text_css);
 });
