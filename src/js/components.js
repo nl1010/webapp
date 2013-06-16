@@ -211,9 +211,9 @@ Crafty.c('Wizard',
     //creating building menu
     this.txt_building = Crafty.e('2D, DOM, Text')
     .attr({ x: Game.menu_width(), y: 224 , w:160})
-    .css($text_css_very_small)
-    .text("'B' to build stuff");
-
+    .css($text_css_very_small);
+    
+    this.display_build_menu_outer();
     this.build();
 
     //Event Display
@@ -228,12 +228,37 @@ Crafty.c('Wizard',
     .text("Fuck this crap! Chop them all!");
   },
 
+  display_build_menu_outer: function()
+  {
+    this.txt_building.text("[B]uild stuff");
+  },
+
   build: function()
   {
     this.bind('KeyDown', function(e)
     {
       if (e.key==Crafty.keys['B'])
-        this.txt_building.text("1: Library");
+        this.display_build_menu_Altar();
+    })
+  },
+
+  //Cheat
+  display_build_menu_Altar: function()
+  {
+    this.txt_building.text("[A]ltar");
+    this.bind('KeyDown', function(e)
+    {
+      if (e.key==Crafty.keys['A'])
+      {
+        alert("Whoohoo");
+        this.wood += 50;
+        this.stone += 50;
+        this.iron += 50;
+        this.crystal += 50;
+        this.soul += 50;
+        this.display_resources();
+        //TODO: build an altar
+      }
     })
   },
 
