@@ -210,13 +210,18 @@ Crafty.c('Wizard',
 
     //creating building menu
     this.building = Crafty.e('2D, DOM, Text')
-    .attr({ x: Game.menu_width(), y: 224 })
-    .css($text_css_small_left)
-    .text("Build");
+    .attr({ x: Game.menu_width(), y: 224 , w:160})
+    .css($text_css_very_small)
+    .text("'B' to build stuff");
 
     //Event Display
+    Crafty.e('2D, DOM, Text')
+    .attr({ x: Game.menu_width(), y: 272, w: 160 })
+    .css($text_css_very_small)
+    .text("Game Event:");
+
     this.txt_event = Crafty.e('2D, DOM, Text')
-    .attr({ x: Game.menu_width(), y: 256, w: 160 })
+    .attr({ x: Game.menu_width(), y: 288, w: 160 })
     .css($text_css_very_small)
     .text("Fuck this crap! Chop them all!");
   },
