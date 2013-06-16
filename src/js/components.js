@@ -178,7 +178,7 @@ Crafty.c('Wizard',
   crystal_display:0,
   soul_display:0,
   //building
-  buiding:0,
+  txt_buiding:0,
   //event
   txt_event:0,
   
@@ -209,21 +209,32 @@ Crafty.c('Wizard',
     this.display_resources();
 
     //creating building menu
-    this.building = Crafty.e('2D, DOM, Text')
+    this.txt_building = Crafty.e('2D, DOM, Text')
     .attr({ x: Game.menu_width(), y: 224 , w:160})
     .css($text_css_very_small)
     .text("'B' to build stuff");
 
+    this.build();
+
     //Event Display
     Crafty.e('2D, DOM, Text')
-    .attr({ x: Game.menu_width(), y: 272, w: 160 })
+    .attr({ x: Game.menu_width(), y: 332, w: 160 })
     .css($text_css_very_small)
     .text("Game Event:");
 
     this.txt_event = Crafty.e('2D, DOM, Text')
-    .attr({ x: Game.menu_width(), y: 288, w: 160 })
+    .attr({ x: Game.menu_width(), y: 348, w: 160 })
     .css($text_css_very_small)
     .text("Fuck this crap! Chop them all!");
+  },
+
+  build: function()
+  {
+    this.bind('KeyDown', function(e)
+    {
+      if (e.key==Crafty.keys['B'])
+        this.txt_building.text("1: Library");
+    })
   },
 
   display_resources: function()

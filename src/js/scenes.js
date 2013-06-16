@@ -138,7 +138,13 @@ this.player = Crafty.e('Wizard')
   Crafty.e('2D, DOM, Text')
   .attr({ x: Game.menu_width()+4, 
     y: 160 })
-  .text('ID:'+$user_id)
+  .text('ID:')
+  .css($text_css);
+
+  Crafty.e('2D, DOM, Text')
+  .attr({ x: Game.menu_width()+48, 
+    y: 160 })
+  .text($user_id)
   .css($text_css);
 
 });
