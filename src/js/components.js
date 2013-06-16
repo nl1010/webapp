@@ -257,6 +257,7 @@ Crafty.c('Wizard',
         this.crystal += 50;
         this.soul += 50;
         this.display_resources();
+        this.display_build_menu_outer();
         //TODO: build an altar
       }
     })
