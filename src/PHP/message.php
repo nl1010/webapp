@@ -1,5 +1,8 @@
 <?php
 #---class Message------
+require_once('../Library/PhpConsole.php');
+PhpConsole::start(true, true, dirname(__FILE__));
+
 Class Message{
 	private $x;
 	private $y;
@@ -31,27 +34,43 @@ Class Message{
 		}
 	}
 	
-	public function __get_message($x,$y){
+	public static function __get_message($x,$y){
 		$query = sprintf('
-				SELECT message FROM table_message WHERE x=\'%x\' y=\'%y\' 
-				');
+				SELECT message FROM table_message WHERE x=\'%d\' and y=\'%d\' 
+				',
+				$x,
+				$y);
 		$result = pg_query($GLOBALS['DB'],$query);
 		if(pg_num_rows($result)!=0){
 			$row = pg_fetch_assoc($result);
 			$message = $row['message'];
 			return $message;
-		}else return false ; #message doesn't exist
+		} else return false ; #message doesn't exist
 	}
 	
-	public function __store_message($x,$y,$message){
-		$query=sprintf('INSERT INTO table_message (x,y,message) VALUES (\'%d\',\'%d\',\'%s\')',
+	//store the message , if message exist then it will add on , if not it will insert a new one
+	public static function __store_message($x,$y,$message){
+		$pre_message = Message::__get_message($x,$y);
+		if ($pre_message != false ) {
+			$message = $pre_message.'\n'.$message ;
+			$query=sprintf('UPDATE table_message SET message = \'%s\' WHERE x = %d and y = %d',
+					pg_escape_string($message),
+					pg_escape_string($x),
+					pg_escape_string($y)
+					);
+			if(pg_query($GLOBALS["DB"],$query)){
+				echo $message;
+			}else echo "something wrong";
+		}else {
+			$query=sprintf('INSERT INTO table_message (x,y,message) VALUES (\'%d\',\'%d\',\'%s\')',
 						pg_escape_string($x),
 						pg_escape_string($y),
 						pg_escape_string($message)
 				);
-		if(pg_query($GLOBALS["DB"],$query)){
+			if(pg_query($GLOBALS["DB"],$query)){
 			echo $message;
-		}else echo "something wrong";
+			}else echo "something wrong";
+		}
 	}
 	
 }
