@@ -58,3 +58,12 @@ $text_css = { 'font-size': '24px',
             'font-family': 'Monospace', 
             'color': 'white', 
             'text-align': 'center' }
+
+$text_css_small_left = { 'font-size': '16px', 
+            'font-family': 'Monospace', 
+            'color': 'white', 
+            'text-align': 'left' }
+$text_css_very_small = { 'font-size': '12px', 
+            'font-family': 'Monospace', 
+            'color': 'white', 
+            'text-align': 'left' }

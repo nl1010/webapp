@@ -76,6 +76,33 @@ Crafty.c('Obstacle',
   }
 });
 
+/*Buildings-------------------------------------------------------*/
+/*----------------------------------------------------------------*/
+
+Crafty.c("Buildings",
+{
+  init: function()
+  {
+    this.requires('Obstacle');
+  }
+});
+
+Crafty.c("Walls",
+{
+  init: function()
+  {
+    this.requires('Buildings');
+  }
+});
+
+Crafty.c("Altar",
+{
+  init: function()
+  {
+    this.requires('Buildings');
+  }
+});
+
 /*Resources-------------------------------------------------------*/
 /*----------------------------------------------------------------*/
 
@@ -129,14 +156,6 @@ Crafty.c("Monsters",
   }
 });
 
-Crafty.c("Messaging",
-{
-  init: function()
-  {
-
-  },
-});
-
 Crafty.c('Message',
 {
   init: function()
@@ -158,10 +177,14 @@ Crafty.c('Wizard',
   iron_display:0,
   crystal_display:0,
   soul_display:0,
+  //building
+  buiding:0,
+  //event
+  txt_event:0,
   
   init: function()
   {
-    this.requires('Actor, PlayerControls, Slide, spr_player, Messaging')
+    this.requires('Actor, PlayerControls, Slide, spr_player')
 		//collision handling
     this.collectResources();
     this.stopOnSolids();
@@ -184,6 +207,18 @@ Crafty.c('Wizard',
     .css($text_css);
 
     this.display_resources();
+
+    //creating building menu
+    this.building = Crafty.e('2D, DOM, Text')
+    .attr({ x: Game.menu_width(), y: 192 })
+    .css($text_css_small_left)
+    .text("Build");
+
+    //Event Display
+    this.txt_event = Crafty.e('2D, DOM, Text')
+    .attr({ x: Game.menu_width(), y: 224, w: 160 })
+    .css($text_css_very_small)
+    .text("Fuck this crap! Chop them all!");
   },
 
   display_resources: function()
@@ -200,7 +235,7 @@ Crafty.c('Wizard',
     this.addComponent('Collision');
     this.onHit('Monsters', function(obj)
     {
-      var choice = confirm("Fight monster?");
+      var choice = confirm("Fight this monster?");
       if (choice==true) 
       {
         alert("The monster crushes your head");
@@ -218,6 +253,7 @@ Crafty.c('Wizard',
           this.wood++;
           this.display_resources();
           obj[0].obj.destroy();
+          this.txt_event.text("You chopped a tree and gained 1 wood");
         }
       }
 
@@ -284,7 +320,6 @@ Crafty.c("PlayerControls",
 
     for(var k in this._keys) 
     {
-
       var keyCode = Crafty.keys[k] || k;
       this._keys[keyCode] = this._keys[k];
     }
