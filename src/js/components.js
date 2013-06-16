@@ -210,13 +210,13 @@ Crafty.c('Wizard',
 
     //creating building menu
     this.building = Crafty.e('2D, DOM, Text')
-    .attr({ x: Game.menu_width(), y: 192 })
+    .attr({ x: Game.menu_width(), y: 224 })
     .css($text_css_small_left)
     .text("Build");
 
     //Event Display
     this.txt_event = Crafty.e('2D, DOM, Text')
-    .attr({ x: Game.menu_width(), y: 224, w: 160 })
+    .attr({ x: Game.menu_width(), y: 256, w: 160 })
     .css($text_css_very_small)
     .text("Fuck this crap! Chop them all!");
   },
@@ -243,50 +243,53 @@ Crafty.c('Wizard',
       }
 
     });
-    this.onHit('Resources', function(obj)
+    this.onHit('Resources', function(res)
     {
-      if (obj[0].obj.has('Trees'))
+      if (res[0].obj.has('Trees'))
       {
         var choice = confirm("Chop down this tree?");
         if (choice==true) 
         {
           this.wood++;
           this.display_resources();
-          obj[0].obj.destroy();
+          res[0].obj.destroy();
           this.txt_event.text("You chopped a tree and gained 1 wood");
         }
       }
 
-      if (obj[0].obj.has('Stones'))
+      if (res[0].obj.has('Stones'))
       {
         var choice = confirm("Mine stone?");
         if (choice==true) 
         {
           this.stone++;
           this.display_resources();
-          obj[0].obj.destroy();
+          res[0].obj.destroy();
+          this.txt_event.text("You smashed the rock and gained 1 stone");
         }
       }
 
-      if (obj[0].obj.has('Iron'))
+      if (res[0].obj.has('Iron'))
       {
         var choice = confirm("Mine iron?");
         if (choice==true) 
         {
           this.iron++;
           this.display_resources();
-          obj[0].obj.destroy();
+          res[0].obj.destroy();
+          this.txt_event.text("You mined the ore and gained 1 iron");
         }
       }
 
-      if (obj[0].obj.has('Crystal'))
+      if (res[0].obj.has('Crystal'))
       {
         var choice = confirm("Mine crystal?");
         if (choice==true) 
         {
           this.crystal++;
           this.display_resources();
-          obj[0].obj.destroy();
+          res[0].obj.destroy();
+          this.txt_event.text("You found and gather 1 crystal");
         }
       }
     });
