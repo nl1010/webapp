@@ -40,9 +40,16 @@
 
 <body>
 	<div style="text-align: center;">
-		<input type="submit" id="submit" value="Leave Message" style="background-color: red;width: 5cm;height: 2cm;text-align: center;">
+		<input type="submit" id="submit" value="Leave Message" style="background-color: red;width: 5cm;height: 2cm;">
+		<input type="submit" id="logout" value="Log Out" style="background-color: red;width: 5cm;height: 2cm;">
 	</div>
 	<script type="text/javascript">
+	$('input#logout').on('click',function(){
+		eraseCookie('x');
+		eraseCookie('y');
+		eraseCookie('userid');
+		document.location.href="homepage.html";
+	})
 	$('input#submit').on('click', function() {
 		var x = readCookie('x');
 		var y = readCookie('y');
