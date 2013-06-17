@@ -32,7 +32,7 @@ Crafty.c("PlayerControls",
         //Trigger the Slide animation
         this.trigger('Slide',direction);
         //Ending a 'Turn'
-        Crafty.trigger('Turn');
+        //Crafty.trigger('Turn');
       }
     })
   }

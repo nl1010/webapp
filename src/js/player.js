@@ -291,7 +291,7 @@ fightMonsters: function()
           this.txt_event.text("You ignore the beast");
           flag = false;
         }
-        else if (flag) {this.txt_event.text("You ran as fast as you can!");flag = false}
+        else if (flag) {this.txt_event.text("You ran away as fast as you can!");flag = false}
       })
 });
 },
