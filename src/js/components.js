@@ -306,12 +306,13 @@ Crafty.c('Wizard',
     this.addComponent('Collision');
     this.onHit('BonfireE', function(bonfire)
     {
+      var flag = true;
       if (!this.rested_east)
         this.txt_event.text("[R]est at campfire to save the resources")
       else 
       {
         this.txt_event.text("The fire was warm and comforting");
-        if (!sent_east)
+        if (!this.sent_east)
         {
           var userid = readCookie('userid');
           var x = readCookie('x');
@@ -331,7 +332,8 @@ Crafty.c('Wizard',
           },function (data){
             alert(data);
           });
-          sent_east = true;
+          this.sent_east = true;
+          this.sent_west = false;
         }
       }
 
@@ -368,7 +370,7 @@ restWest: function()
     else 
     {
       this.txt_event.text("The fire was warm and comforting");
-      if (!sent_west)
+      if (!this.sent_west)
       {
         var userid = readCookie('userid');
         var x = readCookie('x');
@@ -388,7 +390,8 @@ restWest: function()
         },function (data){
           alert(data);
         });
-        sent_west = true;
+        this.sent_west = true;
+        this.sent_east = false;
       }
     }
 
