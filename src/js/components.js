@@ -282,7 +282,7 @@ Crafty.c('Wizard',
     this.addComponent('Collision');
     this.onHit('Bonfire', function(bonfire)
     {
-      this.txt_event.text("Rest at bonfire to save the resources");
+      this.txt_event.text("Rest at campfire to save the resources");
     }, function(bonfire)
     {
       this.txt_event.text("");
