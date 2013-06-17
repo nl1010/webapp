@@ -169,8 +169,9 @@ Crafty.c('Wizard',
   init: function()
   {
     this.requires('Actor, PlayerControls, Slide, spr_player')
-		//collision handling
-    this.collectResources();
+    //collect res
+		this.collectResources();
+    //collision handling
     this.stopOnSolids();
 
     //creating resource display
