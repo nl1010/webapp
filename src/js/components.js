@@ -286,7 +286,7 @@ Crafty.c('Wizard',
         else this.txt_event.text("");
       })
     });
-    this.onHit('Trees', function(res)
+    this.onHit('Resources', function(res)
     {
       if (res[0].obj.has('Trees'))
       {
