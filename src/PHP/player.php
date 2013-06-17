@@ -73,7 +73,7 @@ class Player {
 	}
 
 	#return an obj populated based on a username,if not found obj,then return false
-	public static function get_player_info_by_userid($userid){
+	public static function restore_player_from_DB_byID($userid){
 		$player = new Player();
 		$query = sprintf('SELECT * FROM table_player WHERE userid = %d',pg_escape_string($userid));
 		$result=pg_query($GLOBALS['DB'],$query);
@@ -83,10 +83,12 @@ class Player {
 			$player->fields['wood']=$row['wood'];
 			$player->field['iron'] = $row['iron'];
 			//add more filed here
+			
+			return $player;
 		}else {
 			return false;
 		}
-		return $player;
+
 	}
 
 }
