@@ -15,18 +15,6 @@ $user_id =readCookie("userid");
 
 Crafty.scene('Game', function() 
 {
-
-
-  //Button
-  /*
-  Crafty.e("2D, DOM, Image, msg_button")
-  .attr({ x: Game.menu_width()+4, 
-    y: 224 })
-  .areaMap([0,0],[128,0],[128,45],[0,45]);
-  */
-
-  /*----------------------------------------------------------------*/
-
 // MAP DRAWING
 // -----------
 
@@ -100,7 +88,7 @@ Crafty.e("2D,DOM,TiledMapBuilder")
 
 //Hero
 this.player = Crafty.e('Wizard')
-.attr({x:304, y:256});
+.attr({x:304, y:144});
 
   //Side Bar---------------------------
   /*----------------------------------------------------------------*/
@@ -183,11 +171,10 @@ Crafty.scene('Loading', function()
   .css($text_css);
 
   // Load our sprite map image
-  Crafty.load(['assets/spr.png',
+  Crafty.load(['assets/all_spr.png',
     'assets/ground.png',
     'assets/obstacles.png',
-    'assets/water.png',
-    'assets/spr2.png'], function()
+    'assets/water.png'], function()
     {
     // Once the image is loaded...
 
@@ -197,19 +184,17 @@ Crafty.scene('Loading', function()
     //  to remind us that they simply cause the entity
     //  to be drawn with a certain sprite
     
-    Crafty.sprite(16, 'assets/spr.png', 
+    Crafty.sprite(16, 'assets/all_spr.png', 
     {
       //spr_water:   [0, 68],
       //spr_tree:    [0, 66],
       //spr_village: [0, 62],
-      spr_scroll: [0, 46]
+      spr_scroll: [0, 46],
+      spr_player: [0, 90],
+      spr_altar:[0, 62],
+      spr_wood_wall:[0, 50]
       //spr_player:  [0, 70],
       //spr_grass:   [0, 36]
-    });
-
-    Crafty.sprite(16, 'assets/spr2.png',
-    {
-      spr_player: [0, 18]
     });
 
     // Now that our sprites are ready to draw, start the game

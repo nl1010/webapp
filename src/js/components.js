@@ -44,22 +44,6 @@ Crafty.c('Grid',
       }
     });
 
-/*
-Crafty.c("msg_button", 
-{
-  _func: null,
-  init: function() 
-  {
-    this.requires("2D, DOM, Images, Mouse");
-    this.image("assets/button.png","no-repeat");
-    this.bind('Click', function()
-    {
-      alert("Clicked!");
-    })
-  },
-});
-*/
-
 Crafty.c('Actor',
 {
 	init: function()
@@ -210,20 +194,14 @@ Crafty.c('Wizard',
 
     //creating building menu
     this.txt_building = Crafty.e('2D, DOM, Text')
-    .attr({ x: Game.menu_width(), y: 224 , w:160})
+    .attr({ x: Game.menu_width(), y: 224 , w:164})
     .css($text_css_very_small);
     
     this.display_build_menu_outer();
-    this.build();
-
+    
     //Event Display
-    Crafty.e('2D, DOM, Text')
-    .attr({ x: Game.menu_width(), y: 332, w: 160 })
-    .css($text_css_very_small)
-    .text("Game Event:");
-
     this.txt_event = Crafty.e('2D, DOM, Text')
-    .attr({ x: Game.menu_width(), y: 348, w: 160 })
+    .attr({ x: 4, y: 332, w: 512 })
     .css($text_css_very_small)
     .text("Fuck this crap! Chop them all!");
   },
@@ -231,36 +209,49 @@ Crafty.c('Wizard',
   display_build_menu_outer: function()
   {
     this.txt_building.text("[B]uild stuff");
-  },
-
-  build: function()
-  {
     this.bind('KeyDown', function(e)
     {
       if (e.key==Crafty.keys['B'])
-        this.display_build_menu_Altar();
+        this.build_menu();
     })
   },
 
-  //Cheat
-  display_build_menu_Altar: function()
+  display_build_menu: function()
   {
-    this.txt_building.text("[A]ltar");
+    this.txt_building.text("[A]ltar(free), [W]ooden Walls(1W)");
+  },
+
+  build_menu: function()
+  {
+    this.display_build_menu();
     this.bind('KeyDown', function(e)
     {
       if (e.key==Crafty.keys['A'])
-      {
-        alert("Whoohoo");
-        this.wood += 50;
-        this.stone += 50;
-        this.iron += 50;
-        this.crystal += 50;
-        this.soul += 50;
-        this.display_resources();
-        this.display_build_menu_outer();
-        //TODO: build an altar
-      }
+        this.build_altar();
+      if (e.key==Crafty.keys['W'])
+        this.build_wood_wall();
+
+      this.display_build_menu_outer();
     })
+  },
+
+  //buildings
+  //Cheat
+  build_altar: function()
+  {
+    this.txt_event.text("Praise the Sun!");
+    this.wood += 50;
+    this.stone += 50;
+    this.iron += 50;
+    this.crystal += 50;
+    this.soul += 50;
+    this.display_resources();
+    //TODO: create a img object
+  },
+
+  build_wood_wall: function()
+  {
+    //TODO: build a 'Wall' object
   },
 
   display_resources: function()
@@ -277,65 +268,107 @@ Crafty.c('Wizard',
     this.addComponent('Collision');
     this.onHit('Monsters', function(obj)
     {
-      var choice = confirm("Fight this monster?");
-      if (choice==true) 
+      this.txt_event.text("Fight this monster![Y] / Nope![N]");
+      this.bind('KeyDown', function(e)
       {
-        alert("The monster crushes your head");
-        Crafty.scene('Lose');
-      }
-
+        if (e.key==Crafty.keys['Y'])
+        {
+          this.txt_event.text("The monster crushes your head! Press Enter to play again");
+          this.bind('KeyDown', function(e)
+          {
+            Crafty.scene('Lose');
+          })
+        }
+        else if (e.key==Crafty.keys['N'])
+        {
+          this.txt_event.text("You left it alone");
+        }
+        else this.txt_event.text("");
+      })
     });
-    this.onHit('Resources', function(res)
+    this.onHit('Trees', function(res)
     {
       if (res[0].obj.has('Trees'))
       {
-        var choice = confirm("Chop down this tree?");
-        if (choice==true) 
+        this.txt_event.text("Chop this tree[Y] / Leave it[N]");
+        this.bind('KeyDown', function(e)
         {
-          this.wood++;
-          this.display_resources();
-          res[0].obj.destroy();
-          this.txt_event.text("You chopped a tree and gained 1 wood");
-        }
-      }
+          if (e.key==Crafty.keys['Y'])
+          {
+            this.txt_event.text("You chopped the tree and gained 1 wood");
+            this.wood++;
+            this.display_resources();
+            res[0].obj.destroy();
+          }
+          else if (e.key==Crafty.keys['N'])
+          {
+            this.txt_event.text("You left it alone");
+          }
+          else this.txt_event.text("");
+        })
+      } 
 
       if (res[0].obj.has('Stones'))
       {
-        var choice = confirm("Mine stone?");
-        if (choice==true) 
+        this.txt_event.text("Mine the stone[Y] / Leave it[N]");
+        this.bind('KeyDown', function(e)
         {
-          this.stone++;
-          this.display_resources();
-          res[0].obj.destroy();
-          this.txt_event.text("You smashed the rock and gained 1 stone");
-        }
+          if (e.key==Crafty.keys['Y'])
+          {
+            this.txt_event.text("You smashed the rock and gained 1 stone");
+            this.stone++;
+            this.display_resources();
+            res[0].obj.destroy();
+          }
+          else if (e.key==Crafty.keys['N'])
+          {
+            this.txt_event.text("You left it alone");
+          }
+          else this.txt_event.text("");
+        })
       }
 
       if (res[0].obj.has('Iron'))
       {
-        var choice = confirm("Mine iron?");
-        if (choice==true) 
+        this.txt_event.text("Mine the iron[Y] / Leave it[N]");
+        this.bind('KeyDown', function(e)
         {
-          this.iron++;
-          this.display_resources();
-          res[0].obj.destroy();
-          this.txt_event.text("You mined the ore and gained 1 iron");
-        }
+          if (e.key==Crafty.keys['Y'])
+          {
+            this.txt_event.text("You mined the ore and gained 1 iron");
+            this.iron++;
+            this.display_resources();
+            res[0].obj.destroy();
+          }
+          else if (e.key==Crafty.keys['N'])
+          {
+            this.txt_event.text("You left it alone");
+          }
+          else this.txt_event.text("");
+        })
       }
 
       if (res[0].obj.has('Crystal'))
       {
-        var choice = confirm("Mine crystal?");
-        if (choice==true) 
+        this.txt_event.text("Gather crystal[Y] / Leave it[N]");
+        this.bind('KeyDown', function(e)
         {
-          this.crystal++;
-          this.display_resources();
-          res[0].obj.destroy();
-          this.txt_event.text("You found and gather 1 crystal");
-        }
+          if (e.key==Crafty.keys['Y'])
+          {
+            this.txt_event.text("You found and gather 1 crystal");
+            this.crystal++;
+            this.display_resources();
+            res[0].obj.destroy();
+          }
+          else if (e.key==Crafty.keys['N'])
+          {
+            this.txt_event.text("You left it alone");
+          }
+          else this.txt_event.text("");
+        })
       }
-    });
-  },
+    })
+},
 
 	//if onHit, stopMovement
 	stopOnSolids: function()
@@ -346,6 +379,7 @@ Crafty.c('Wizard',
       this.cancelSlide();
     });
   }
+
 });
 
 //Controls
