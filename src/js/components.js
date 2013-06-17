@@ -63,7 +63,15 @@ Crafty.c('Obstacle',
 /*Bonfire---------------------------------------------------------*/
 /*----------------------------------------------------------------*/
 
-Crafty.c("Bonfire",
+Crafty.c("BonfireE",
+{
+  init: function()
+  {
+    this.requires('Actor,spr_bonfire');
+  }
+});
+
+Crafty.c("BonfireW",
 {
   init: function()
   {
@@ -176,6 +184,9 @@ Crafty.c('Wizard',
   txt_buiding:0,
   //event
   txt_event:0,
+  //bonfire rest
+  rested_east:false,
+  rested_west:false,
   
   init: function()
   {
@@ -183,7 +194,8 @@ Crafty.c('Wizard',
     //collect res
 		this.collectResources();
     //bonfires interaction
-    this.meetingBonfires();
+    this.restEast();
+    this.restWest();
     //collision handling
     this.stopOnSolids();
 
@@ -232,7 +244,7 @@ Crafty.c('Wizard',
 
   display_build_menu: function()
   {
-    this.txt_building.text("[A]ltar(free), [W]ooden Walls(1W)");
+    this.txt_building.text("[A]ltar(free), [W]ooden Walls(1W), [G]ateway");
   },
 
   build_menu: function()
@@ -277,15 +289,63 @@ Crafty.c('Wizard',
     this.soul_display.text(this.soul);
   },
 
-  meetingBonfires: function()
+  restEast: function()
   {
     this.addComponent('Collision');
-    this.onHit('Bonfire', function(bonfire)
+    this.onHit('BonfireE', function(bonfire)
     {
-      this.txt_event.text("Rest at campfire to save the resources");
+      var flag = true;
+      if (!this.rested_east)
+        this.txt_event.text("[R]est at campfire to save the resources")
+      else 
+        this.txt_event.text("The fire was warm and comforting");
+
+      this.bind('KeyDown', function(e)
+      {
+        if (this.rested_east && flag)
+        {
+          flag = false;
+        } else if (e.key==Crafty.keys['R'] && flag && !this.rested_east)
+        {
+          flag = false;
+          this.rested_east = true;
+          this.rested_west = false;
+        }
+      });
     }, function(bonfire)
     {
       this.txt_event.text("");
+      flag = false;
+    })
+  },
+
+  restWest: function()
+  {
+    this.addComponent('Collision');
+    this.onHit('BonfireW', function(bonfire)
+    {
+      var flag = true;
+      if (!this.rested_west)
+        this.txt_event.text("[R]est at campfire to save the resources")
+      else 
+        this.txt_event.text("The fire was warm and comforting");
+
+      this.bind('KeyDown', function(e)
+      {
+        if (this.rested_west && flag)
+        {
+          flag = false;
+        } else if (e.key==Crafty.keys['R'] && flag && !this.rested_west)
+        {
+          flag = false;
+          this.rested_west = true;
+          this.rested_east = false; 
+        }
+      });
+    }, function(bonfire)
+    {
+      this.txt_event.text("");
+      flag = false;
     })
   },
 

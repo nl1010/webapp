@@ -91,9 +91,9 @@ Crafty.e("2D,DOM,TiledMapBuilder")
   .attr({x:304, y:144});
 
   //Bonfires
-  this.bonfireEast = Crafty.e('Bonfire')
+  this.bonfireEast = Crafty.e('BonfireE')
   .attr({x:384, y:128});
-  this.bonfireWest = Crafty.e('Bonfire')
+  this.bonfireWest = Crafty.e('BonfireW')
   .attr({x:80, y:176});
 
   //Side Bar---------------------------
