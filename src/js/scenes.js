@@ -86,9 +86,15 @@ Crafty.e("2D,DOM,TiledMapBuilder")
     
   });
 
-//Hero
-this.player = Crafty.e('Wizard')
-.attr({x:304, y:144});
+  //Hero
+  this.player = Crafty.e('Wizard')
+  .attr({x:304, y:144});
+
+  //Bonfires
+  this.bonfireEast = Crafty.e('Bonfire')
+  .attr({x:384, y:128});
+  this.bonfireWest = Crafty.e('Bonfire')
+  .attr({x:80, y:176});
 
   //Side Bar---------------------------
   /*----------------------------------------------------------------*/
@@ -191,8 +197,9 @@ Crafty.scene('Loading', function()
       //spr_village: [0, 62],
       spr_scroll: [0, 46],
       spr_player: [0, 90],
-      spr_altar:[0, 62],
-      spr_wood_wall:[0, 50]
+      spr_altar: [0, 62],
+      spr_wood_wall: [0, 50],
+      spr_bonfire: [0, 12]
       //spr_player:  [0, 70],
       //spr_grass:   [0, 36]
     });

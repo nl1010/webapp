@@ -60,6 +60,17 @@ Crafty.c('Obstacle',
   }
 });
 
+/*Bonfire---------------------------------------------------------*/
+/*----------------------------------------------------------------*/
+
+Crafty.c("Bonfire",
+{
+  init: function()
+  {
+    this.requires('Actor,spr_bonfire');
+  }
+});
+
 /*Buildings-------------------------------------------------------*/
 /*----------------------------------------------------------------*/
 
@@ -71,7 +82,7 @@ Crafty.c("Buildings",
   }
 });
 
-Crafty.c("Walls",
+Crafty.c("Wood_Wall",
 {
   init: function()
   {
@@ -171,6 +182,8 @@ Crafty.c('Wizard',
     this.requires('Actor, PlayerControls, Slide, spr_player')
     //collect res
 		this.collectResources();
+    //bonfires interaction
+    this.meetingBonfires();
     //collision handling
     this.stopOnSolids();
 
@@ -204,7 +217,7 @@ Crafty.c('Wizard',
     this.txt_event = Crafty.e('2D, DOM, Text')
     .attr({ x: 4, y: 332, w: 512 })
     .css($text_css_very_small)
-    .text("Fuck this crap! Chop them all!");
+    .text("The adventure begins!");
   },
 
   display_build_menu_outer: function()
@@ -262,6 +275,18 @@ Crafty.c('Wizard',
     this.iron_display.text(this.iron);
     this.crystal_display.text(this.crystal);
     this.soul_display.text(this.soul);
+  },
+
+  meetingBonfires: function()
+  {
+    this.addComponent('Collision');
+    this.onHit('Bonfire', function(bonfire)
+    {
+      this.txt_event.text("Rest at bonfire to save the resources");
+    }, function(bonfire)
+    {
+      this.txt_event.text("");
+    })
   },
 
   collectResources: function()
