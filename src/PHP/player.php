@@ -75,13 +75,14 @@ class Player {
 	#return an obj populated based on a username,if not found obj,then return false
 	public static function restore_player_from_DB_byID($userid){
 		$player = new Player();
-		$query = sprintf('SELECT * FROM table_player WHERE userid = %d',pg_escape_string($userid));
+		$query = sprintf('SELECT * FROM table_player WHERE user_id = %d',pg_escape_string($userid));
 		$result=pg_query($GLOBALS['DB'],$query);
 		if(pg_num_rows($result)!=0){//check if query exist
 			$row = pg_fetch_assoc($result); //fetch contends
 			$player->userid=$userid;
 			$player->fields['wood']=$row['wood'];
-			$player->field['iron'] = $row['iron'];
+			echo $player->fields['wood'];
+			$player->fields['iron'] = $row['iron'];
 			//add more filed here
 			
 			return $player;

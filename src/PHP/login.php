@@ -14,6 +14,9 @@ $password = $_POST['password'];
 require_once('user.php');
 $user_id = User::password_check($username,$password);
 require_once('player.php');
-Player::init_player_table ($user_id);
-
+//Player::init_player_table ($user_id);
+$player = Player::restore_player_from_DB_byID($user_id);
+echo $player;
+// setcookie("userid",$player->uid);
+// setcookie("wood",$player->fields['wood']);
 ?>
