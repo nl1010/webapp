@@ -295,21 +295,24 @@ Crafty.c('Wizard',
     this.onHit('Monsters', function(obj)
     {
       this.txt_event.text("Fight this monster![Y] / Nope![N]");
+      var flag = true;
       this.bind('KeyDown', function(e)
       {
-        if (e.key==Crafty.keys['Y'])
+        if (e.key==Crafty.keys['Y'] && flag)
         {
           this.txt_event.text("The monster crushes your head! Press Enter to play again");
+          flag = false;
           this.bind('KeyDown', function(e)
           {
             Crafty.scene('Lose');
           })
         }
-        else if (e.key==Crafty.keys['N'])
+        else if (e.key==Crafty.keys['N'] && flag)
         {
           this.txt_event.text("You left it alone");
+          flag = false;
         }
-        else this.txt_event.text("");
+        else {this.txt_event.text("");flag = false}
       })
     });
     this.onHit('Resources', function(res)
@@ -317,69 +320,80 @@ Crafty.c('Wizard',
       if (res[0].obj.has('Trees'))
       {
         this.txt_event.text("Chop this tree[Y] / Leave it[N]");
+        //need this to solve the resource keyboard bug
+        var flag = true;
         this.bind('KeyDown', function(e)
         {
-          if (e.key==Crafty.keys['Y'])
+          if (e.key==Crafty.keys['Y'] && flag)
           {
             this.txt_event.text("You chopped the tree and gained 1 wood");
             this.wood++;
             createCookie('wood', this.wood, 1);
             this.display_resources();
             res[0].obj.destroy();
+            flag = false;
           }
-          else if (e.key==Crafty.keys['N'])
+          else if (e.key==Crafty.keys['N'] && flag)
           {
             this.txt_event.text("You left it alone");
+            flag = false;
           }
-          else this.txt_event.text("");
+          else {this.txt_event.text("");flag = false}
         })
       } 
 
       if (res[0].obj.has('Stones'))
       {
         this.txt_event.text("Mine the stone[Y] / Leave it[N]");
+        var flag = true;
         this.bind('KeyDown', function(e)
         {
-          if (e.key==Crafty.keys['Y'])
+          if (e.key==Crafty.keys['Y'] && flag)
           {
             this.txt_event.text("You smashed the rock and gained 1 stone");
             this.stone++;
             createCookie('stone', this.stone, 1);
             this.display_resources();
             res[0].obj.destroy();
+            flag = false;
           }
-          else if (e.key==Crafty.keys['N'])
+          else if (e.key==Crafty.keys['N'] && flag)
           {
             this.txt_event.text("You left it alone");
+            flag = false;
           }
-          else this.txt_event.text("");
+          else {this.txt_event.text("");flag = false}
         })
       }
 
       if (res[0].obj.has('Iron'))
       {
         this.txt_event.text("Mine the iron[Y] / Leave it[N]");
+        var flag = true;
         this.bind('KeyDown', function(e)
         {
-          if (e.key==Crafty.keys['Y'])
+          if (e.key==Crafty.keys['Y'] && flag)
           {
             this.txt_event.text("You mined the ore and gained 1 iron");
             this.iron++;
             createCookie('iron', this.iron, 1);
             this.display_resources();
             res[0].obj.destroy();
+            flag = false;
           }
-          else if (e.key==Crafty.keys['N'])
+          else if (e.key==Crafty.keys['N'] && flag)
           {
             this.txt_event.text("You left it alone");
+            flag = false;
           }
-          else this.txt_event.text("");
+          else {this.txt_event.text("");flag = false}
         })
       }
 
       if (res[0].obj.has('Crystal'))
       {
         this.txt_event.text("Gather crystal[Y] / Leave it[N]");
+        var flag = true;
         this.bind('KeyDown', function(e)
         {
           if (e.key==Crafty.keys['Y'])
@@ -389,12 +403,14 @@ Crafty.c('Wizard',
             createCookie('crystal', this.crystal, 1);
             this.display_resources();
             res[0].obj.destroy();
+            flag = false;
           }
-          else if (e.key==Crafty.keys['N'])
+          else if (e.key==Crafty.keys['N'] && flag)
           {
             this.txt_event.text("You left it alone");
+            flag = false;
           }
-          else this.txt_event.text("");
+          else {this.txt_event.text("");flag = false}
         })
       }
     })
