@@ -143,9 +143,29 @@ Crafty.scene('Victory', function()
   Crafty.e('2D, DOM, Text')
   .attr({ x: Game.width()/2-32, 
     y: Game.height()/2-32 })
-  .text('Victory!')
+  .text('Finally you have succeeded in building the Gateway. You can now escape the island!...Bye')
   .css($text_css);
 
+  this.restart_game 
+  = this.bind('KeyDown', function() 
+  {
+    Crafty.scene('Game');
+  });
+}, function() 
+{
+  this.unbind('KeyDown', this.restart_game);
+});
+
+//Die Scene
+Crafty.scene('Lose', function()
+{
+  Crafty.e('2D, DOM, Text')
+  .text('YOU DIED! ...noob')
+  .attr({ x: 0, 
+    y: Game.height()/2, 
+    w: Game.width() })
+  .css($text_css);
+  
   this.restart_game 
   = this.bind('KeyDown', function() 
   {
@@ -187,30 +207,16 @@ Crafty.scene('Loading', function()
     
     Crafty.sprite(16, 'assets/all_spr.png', 
     {
-      //spr_water:   [0, 68],
-      //spr_tree:    [0, 66],
-      //spr_village: [0, 62],
       spr_scroll: [0, 46],
       spr_player: [0, 90],
       spr_altar: [0, 62],
       spr_wood_wall: [0, 50],
       spr_bonfire: [0, 12],
-      //spr_player:  [0, 70],
-      //spr_grass:   [0, 36]
+      spr_library: [0, 8],
+      spr_gateway: [0, 60]
     });
 
     // Now that our sprites are ready to draw, start the game
     Crafty.scene('Game');
   })
-});
-
-//Die Scene
-Crafty.scene('Lose', function()
-{
-  Crafty.e('2D, DOM, Text')
-  .text('YOU DIED!')
-  .attr({ x: 0, 
-    y: Game.height()/2, 
-    w: Game.width() })
-  .css($text_css);
 });

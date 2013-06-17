@@ -67,3 +67,8 @@ $text_css_very_small = { 'font-size': '12px',
             'font-family': 'Monospace', 
             'color': 'white', 
             'text-align': 'left' }
+$text_css_event = { 'font-size': '22px', 
+            'font-family': 'Monospace', 
+            'color': 'white', 
+            'text-align': 'center' }
+

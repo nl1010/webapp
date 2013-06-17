@@ -6,6 +6,7 @@ Crafty.c('Wizard',
   iron:0,
   crystal:0,
   soul:0,
+  //display
   wood_display:0,
   stone_display:0,
   iron_display:0,
@@ -13,6 +14,8 @@ Crafty.c('Wizard',
   soul_display:0,
   //building
   txt_buiding:0,
+  have_library:false,
+  have_gateway:false,
   //event
   txt_event:0,
   //bonfire rest
@@ -68,8 +71,8 @@ Crafty.c('Wizard',
     
     //Event Display
     this.txt_event = Crafty.e('2D, DOM, Text')
-    .attr({ x: 4, y: 332, w: 512 })
-    .css($text_css_very_small)
+    .attr({ x: 4, y: 332, w: 600 })
+    .css($text_css_event)
     .text("The adventure begins!");
   },
 
@@ -85,7 +88,7 @@ Crafty.c('Wizard',
 
   display_build_menu: function()
   {
-    this.txt_building.text("[A]ltar(free), [W]ooden Walls(1W), [G]ateway");
+    this.txt_building.text("[A]ltar(free), [W]ooden Walls(1W), [L]ibrary(1W,1S), [G]ateway");
   },
 
   build_menu: function()
@@ -98,6 +101,10 @@ Crafty.c('Wizard',
         this.build_altar();
       if (e.key==Crafty.keys['W'] && flag)
         this.build_wood_wall();
+      if (e.key==Crafty.keys['L'] && flag)
+        this.build_library();
+      if (e.key==Crafty.keys['G'] && flag)
+        this.build_gateway();
 
       this.display_build_menu_outer();
       flag = false;
@@ -118,9 +125,22 @@ Crafty.c('Wizard',
     //TODO: create a img object
   },
 
+  //obstacle
   build_wood_wall: function()
   {
     //TODO: build a 'Wall' object
+  },
+
+  //inc souls every 10 sec
+  build_library: function()
+  {
+    //TODO: build a 'Library' object
+  },
+
+  //wins
+  build_gateway: function()
+  {
+    //TODO: build a 'Gateway' object
   },
 
   display_resources: function()
@@ -273,7 +293,7 @@ fightMonsters: function()
             var flag2 = true;
             this.bind('KeyDown', function(e)
             {
-              if (flag2){this.txt_event.text("You throw everything you have to the monster. He got angry and injured himself to death");flag=false;flag2=false;}          
+              if (flag2){this.txt_event.text("You throw everything you have to the monster. He got angry and injured himself to death. You lost some of your resources however.");flag=false;flag2=false;}          
             })
           } 
           else
@@ -303,14 +323,14 @@ collectResources: function()
   {
     if (res[0].obj.has('Trees'))
     {
-      this.txt_event.text("Chop this tree[Y] / Leave it[N]");
+      this.txt_event.text("Chop that tree down![Y] Dude, I'm an elf![N]");
         //need this to solve the resource keyboard bug
         var flag = true;
         this.bind('KeyDown', function(e)
         {
           if (e.key==Crafty.keys['Y'] && flag)
           {
-            this.txt_event.text("You chopped the tree and gained 1 wood");
+            this.txt_event.text("You chopped the tree and gained 1 wood. Take that Nature!");
             this.wood++;
             createCookie('wood', this.wood, 1);
             this.display_resources();
@@ -328,7 +348,7 @@ collectResources: function()
 
       if (res[0].obj.has('Stones'))
       {
-        this.txt_event.text("Mine the stone[Y] / Leave it[N]");
+        this.txt_event.text("Smash it![Y] / Leave it![N]");
         var flag = true;
         this.bind('KeyDown', function(e)
         {

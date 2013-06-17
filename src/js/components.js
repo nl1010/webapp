@@ -86,7 +86,7 @@ Crafty.c("Buildings",
 {
   init: function()
   {
-    this.requires('Obstacle');
+    this.requires('Actor');
   }
 });
 
@@ -94,7 +94,23 @@ Crafty.c("Wood_Wall",
 {
   init: function()
   {
-    this.requires('Buildings');
+    this.requires('Buildings, spr_wood_wall, Obstacle');
+  }
+});
+
+Crafty.c("Library",
+{
+  init: function()
+  {
+    this.requires('Buildings, spr_library');
+  }
+});
+
+Crafty.c("Gateway",
+{
+  init: function()
+  {
+    this.requires('Buildings, spr_gateway');
   }
 });
 
@@ -105,7 +121,6 @@ Crafty.c("Altar",
     this.requires('Buildings');
   }
 });
-
 /*Resources-------------------------------------------------------*/
 /*----------------------------------------------------------------*/
 
