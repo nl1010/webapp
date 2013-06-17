@@ -189,6 +189,8 @@ Crafty.c('Wizard',
   rested_west:false,
   east:0,
   west:0,
+  sent_east:false,
+  sent_west:false,
 
   init: function()
   {
@@ -304,13 +306,12 @@ Crafty.c('Wizard',
     this.addComponent('Collision');
     this.onHit('BonfireE', function(bonfire)
     {
-      var flag = true;
       if (!this.rested_east)
         this.txt_event.text("[R]est at campfire to save the resources")
       else 
       {
         this.txt_event.text("The fire was warm and comforting");
-        if (flag)
+        if (!sent_east)
         {
           var userid = readCookie('userid');
           var x = readCookie('x');
@@ -330,7 +331,7 @@ Crafty.c('Wizard',
           },function (data){
             alert(data);
           });
-          flag = false;
+          sent_east = true;
         }
       }
 
@@ -365,7 +366,32 @@ restWest: function()
     if (!this.rested_west)
       this.txt_event.text("[R]est at campfire to save the resources")
     else 
+    {
       this.txt_event.text("The fire was warm and comforting");
+      if (!sent_west)
+      {
+        var userid = readCookie('userid');
+        var x = readCookie('x');
+        var y = readCookie('y');
+        var iron = readCookie('iron');
+        var wood = readCookie('wood');
+        var crystal = readCookie('crystal');
+        var stone = readCookie('stone');
+        $.post('PHP/save.php',{
+          userid:userid,
+          x:x,
+          y:y,
+          iron:iron,
+          wood:wood,
+          crystal:crystal,
+          stone:stone
+        },function (data){
+          alert(data);
+        });
+        sent_west = true;
+      }
+    }
+
 
     this.bind('KeyDown', function(e)
     {
