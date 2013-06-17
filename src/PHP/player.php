@@ -8,12 +8,12 @@ class Player {
 	#initialize user obj
 	public function __construct(){
 		$this->uid ='';
-		$this->fields = array("wood" =>0,"iron"=>0,"stone"=>0,"crystal"=>0);
+		$this->fields = array("x"=>0,"y"=>0,"wood" =>0,"iron"=>0,"stone"=>0,"crystal"=>0);
 	}
 
 	#get function
 	public function __get($field) {
-		if($field == "user_id") {
+		if($field == "userid") {
 			return $this->uid;
 		}else {
 			return $this->fields[$field];
@@ -22,47 +22,49 @@ class Player {
 
 	#set function
 	public function __set($field,$value){
-		if(array_key_exists($field, $this->fields)){
-			$this->fields[$field] =$value;
-		} else echo "field not exist in __set </br>";
+		if($field == 'userid'){
+			$this->uid=$value;
+		}else {
+			if(array_key_exists($field, $this->fields)){
+				$this->fields[$field] =$value;
+			} else echo "field not exist in __set </br>";
+		}
 	}
 
-	#call this function to initialize player table when registed
+	#call this function to initialize player table --ONLY CALLED WHEN REGISTED
 	public static function init_player_table ($userid){
-		$query=sprintf('INSERT INTO table_player (user_id) VALUES (%d)',pg_escape_string($userid));
+		$query=sprintf('INSERT INTO table_player (user_id,iron,wood,stone,crystal) VALUES (%d,0,0,0,0)',pg_escape_string($userid));
 		if (pg_query($GLOBALS['DB'],$query)){
 			return true;
 		}else return false;
 	}
-	
+
 	#save player info
-	public function __save_player_info_to_DB(){
-		$userid = readCookie('userid');
-		$wood = readCookie('wood');
-		$crystal = readCookie('crystal');
-		$iron = readCookie('iron');
-		$stone = readCookie('stone');
+	public static function __save_player_info_to_DB($userid,$x,$y,$wood,$crystal,$iron,$stone){
 		if ($userid != null ){
-				$player = new Player();
-				$user->__set("userid",$userid);
-				$user->__set("wood",$wood);
-				$crystal->__set("crystal",$crystal);
-				$iron -> __set("iron",$iron);
-				$stone -> __set('stone',$stone);
-				$query=sprintf('UPDATE table_register SET wood=%d , crystal=%d , iron=%d , stone=%d WHERE user_id = %d',
-						pg_escape_string($player->fields['wood']),
-						pg_escape_string($player->fields['crystal']),
-						pg_escape_string($player->fields['iron']),
-						pg_escape_string($player->fields['stone']),
-						pg_escape_string($player->fields['uid'])
-				);
-				if(pg_query($GLOBALS['DB'],$query)){
-					//successfully inserted
-					echo "save successful";
-					return $user;
-				} else
-					echo "error to save player's info";
-				return false;
+			$player = new Player();
+			$player->__set("userid",$userid);
+			$player->__set("wood",$wood);
+			$player->__set("crystal",$crystal);
+			$player -> __set("iron",$iron);
+			$player -> __set('stone',$stone);
+			$query=sprintf('UPDATE table_player SET x=%d , y=%d, wood=%d , crystal=%d , iron=%d , stone=%d WHERE user_id = %d',
+					pg_escape_string($player->fields['x']),
+					pg_escape_string($player->fields['y']),
+					pg_escape_string($player->fields['wood']),
+					pg_escape_string($player->fields['crystal']),
+					pg_escape_string($player->fields['iron']),
+					pg_escape_string($player->fields['stone']),
+					pg_escape_string($player->uid)
+			);
+			echo $query;
+			if(pg_query($GLOBALS['DB'],$query)){
+				//successfully inserted
+				//echo "save successful";
+				return $player;
+			} else
+				echo "error to save player's info";
+			return false;
 
 		} else {
 			echo "error:password needed </br>"; //using ajax -> javascript
@@ -80,16 +82,14 @@ class Player {
 			$player->userid=$userid;
 			$player->fields['wood']=$row['wood'];
 			$player->field['iron'] = $row['iron'];
-			//add more filed here 
+			//add more filed here
 		}else {
 			return false;
 		}
 		return $player;
 	}
 
-
-
-	}
+}
 
 
 ?>

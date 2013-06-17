@@ -13,7 +13,7 @@ $password = $_POST['password'];
 
 require_once('user.php');
 $user_id = User::password_check($username,$password);
-//require_once('player.php');
-//Player::init_player ($user_id);
+require_once('player.php');
+Player::init_player_table ($user_id);
 
 ?>
