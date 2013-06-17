@@ -323,6 +323,7 @@ Crafty.c('Wizard',
           {
             this.txt_event.text("You chopped the tree and gained 1 wood");
             this.wood++;
+            createCookie('wood', this.wood, 1);
             this.display_resources();
             res[0].obj.destroy();
           }
@@ -343,6 +344,7 @@ Crafty.c('Wizard',
           {
             this.txt_event.text("You smashed the rock and gained 1 stone");
             this.stone++;
+            createCookie('stone', this.stone, 1);
             this.display_resources();
             res[0].obj.destroy();
           }
@@ -363,6 +365,7 @@ Crafty.c('Wizard',
           {
             this.txt_event.text("You mined the ore and gained 1 iron");
             this.iron++;
+            createCookie('iron', this.iron, 1);
             this.display_resources();
             res[0].obj.destroy();
           }
@@ -383,6 +386,7 @@ Crafty.c('Wizard',
           {
             this.txt_event.text("You found and gather 1 crystal");
             this.crystal++;
+            createCookie('crystal', this.crystal, 1);
             this.display_resources();
             res[0].obj.destroy();
           }
