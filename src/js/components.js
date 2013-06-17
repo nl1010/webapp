@@ -194,9 +194,10 @@ Crafty.c('Wizard',
   {
     this.requires('Actor, PlayerControls, Slide, spr_player')
     //collect res
-		this.collectResources();
+    this.collectResources();
+    //fight monsters
+    this.fightMonsters();
     //bonfires interaction
-    //Bonfires
     this.east = Crafty.e('BonfireE')
     .attr({x:384, y:128});
     this.west = Crafty.e('BonfireW')
@@ -257,14 +258,16 @@ Crafty.c('Wizard',
   build_menu: function()
   {
     this.display_build_menu();
+    var flag = true;
     this.bind('KeyDown', function(e)
     {
-      if (e.key==Crafty.keys['A'])
+      if (e.key==Crafty.keys['A'] && flag)
         this.build_altar();
-      if (e.key==Crafty.keys['W'])
+      if (e.key==Crafty.keys['W'] && flag)
         this.build_wood_wall();
 
       this.display_build_menu_outer();
+      flag = false;
     })
   },
 
@@ -360,10 +363,10 @@ Crafty.c('Wizard',
     })
   },
 
-  collectResources: function()
+  fightMonsters: function()
   {
     this.addComponent('Collision');
-    this.onHit('Monsters', function(obj)
+    this.onHit('Monsters', function(monster)
     {
       this.txt_event.text("Fight this monster![Y] / Nope![N]");
       var flag = true;
@@ -371,26 +374,51 @@ Crafty.c('Wizard',
       {
         if (e.key==Crafty.keys['Y'] && flag)
         {
-          this.txt_event.text("The monster crushes your head! Press Enter to play again");
-          flag = false;
-          this.bind('KeyDown', function(e)
+          if (this.wood >= 1 && this.iron >= 1
+            && this.stone >= 1 && this.crystal >= 1)
           {
-            Crafty.scene('Lose');
-          })
+            this.txt_event.text("Uraaa!");
+            flag = false;
+            monster[0].obj.destroy();
+            //reduces resources
+            this.wood--; this.iron--;
+            this.stone--; this.crystal--;
+            this.soul++;
+            this.display_resources();
+            var flag2 = true;
+            this.bind('KeyDown', function(e)
+            {
+              if (flag2){this.txt_event.text("You throw everything you have to the monster. He got angry and injured himself to death");flag=false;flag2=false;}          
+            })
+          } 
+          else
+          {
+            this.txt_event.text("The monster crushes your head!");
+            flag = false;
+            this.bind('KeyDown', function(e)
+            {
+              Crafty.scene('Lose');
+            })
+          }     
         }
         else if (e.key==Crafty.keys['N'] && flag)
         {
-          this.txt_event.text("You left it alone");
+          this.txt_event.text("You ignore the beast");
           flag = false;
         }
-        else {this.txt_event.text("");flag = false}
+        else if (flag) {this.txt_event.text("You ran as fast as you can!");flag = false}
       })
-    });
-    this.onHit('Resources', function(res)
+});
+},
+
+collectResources: function()
+{
+  this.addComponent('Collision');
+  this.onHit('Resources', function(res)
+  {
+    if (res[0].obj.has('Trees'))
     {
-      if (res[0].obj.has('Trees'))
-      {
-        this.txt_event.text("Chop this tree[Y] / Leave it[N]");
+      this.txt_event.text("Chop this tree[Y] / Leave it[N]");
         //need this to solve the resource keyboard bug
         var flag = true;
         this.bind('KeyDown', function(e)
