@@ -46,6 +46,10 @@ class User {
 				);
 				if(pg_query($GLOBALS['DB'],$query)){
 					//successfully inserted
+					$user_id = User::password_check($username,$password); //to get the user_id;
+					require_once('player.php');
+					Player::init_player_table($user_id); //initialise the player's table
+					
 					echo "register successful</br>";
 					return $user;
 				} else

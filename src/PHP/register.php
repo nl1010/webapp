@@ -16,5 +16,5 @@
 	require_once('user.php');
 	$user = new User();
 	$user = $user->__set_username_password_to_DB($username,$password);
-
+	
 ?>
