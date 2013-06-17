@@ -67,7 +67,7 @@ Crafty.c("BonfireE",
 {
   init: function()
   {
-    this.requires('Actor,spr_bonfire');
+    this.requires('Actor,Image').image("assets/unlit_fire.gif");
   }
 });
 
@@ -75,7 +75,7 @@ Crafty.c("BonfireW",
 {
   init: function()
   {
-    this.requires('Actor,spr_bonfire');
+    this.requires('Actor,Image').image("assets/unlit_fire.gif");
   }
 });
 
@@ -187,13 +187,20 @@ Crafty.c('Wizard',
   //bonfire rest
   rested_east:false,
   rested_west:false,
-  
+  east:0,
+  west:0,
+
   init: function()
   {
     this.requires('Actor, PlayerControls, Slide, spr_player')
     //collect res
 		this.collectResources();
     //bonfires interaction
+    //Bonfires
+    this.east = Crafty.e('BonfireE')
+    .attr({x:384, y:128});
+    this.west = Crafty.e('BonfireW')
+    .attr({x:80, y:176});
     this.restEast();
     this.restWest();
     //collision handling
@@ -309,7 +316,9 @@ Crafty.c('Wizard',
         {
           flag = false;
           this.rested_east = true;
+          this.east.image("assets/lit_fire.png");
           this.rested_west = false;
+          this.west.image("assets/unlit_fire.gif");
         }
       });
     }, function(bonfire)
@@ -339,7 +348,9 @@ Crafty.c('Wizard',
         {
           flag = false;
           this.rested_west = true;
-          this.rested_east = false; 
+          this.west.image("assets/lit_fire.png");
+          this.rested_east = false;
+          this.east.image("assets/unlit_fire.gif");
         }
       });
     }, function(bonfire)

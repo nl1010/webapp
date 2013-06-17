@@ -90,12 +90,6 @@ Crafty.e("2D,DOM,TiledMapBuilder")
   this.player = Crafty.e('Wizard')
   .attr({x:304, y:144});
 
-  //Bonfires
-  this.bonfireEast = Crafty.e('BonfireE')
-  .attr({x:384, y:128});
-  this.bonfireWest = Crafty.e('BonfireW')
-  .attr({x:80, y:176});
-
   //Side Bar---------------------------
   /*----------------------------------------------------------------*/
   //Resources:
@@ -180,7 +174,8 @@ Crafty.scene('Loading', function()
   Crafty.load(['assets/all_spr.png',
     'assets/ground.png',
     'assets/obstacles.png',
-    'assets/water.png'], function()
+    'assets/water.png',
+    'assets/lit_fire.png'], function()
     {
     // Once the image is loaded...
 
@@ -199,7 +194,7 @@ Crafty.scene('Loading', function()
       spr_player: [0, 90],
       spr_altar: [0, 62],
       spr_wood_wall: [0, 50],
-      spr_bonfire: [0, 12]
+      spr_bonfire: [0, 12],
       //spr_player:  [0, 70],
       //spr_grass:   [0, 36]
     });
