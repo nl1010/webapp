@@ -27,6 +27,8 @@ Crafty.c('Wizard',
   west:0,
   sent_east:false,
   sent_west:false,
+  //msg flag
+  msg_flag: false,
 
 
   init: function()
@@ -64,7 +66,6 @@ Crafty.c('Wizard',
         var y = json[i].y;
         Crafty.e('Message')
         .attr({x:x*16, y:y*16}); 
-          //alert (json[i].x+","+json[i].y);
         }
       //  alert(json);
     }); 
@@ -222,22 +223,28 @@ Crafty.c('Wizard',
     this.addComponent('Collision');
     this.onHit('Message', function(msg)
     {
+      if (!this.msg_flag)
+      {
 	//
-	var x = this.x;
-	var y = this.y;
+	var x = parseInt(this.x/16);
+	var y = parseInt(this.y/16);
+	console.log(x+','+y);
 	var msg = null;
 	$.post('PHP/get_message.php', {
-				x : x,
+				x: x,
 				y : y
 			}, function(data) {
-			console.log(data);
+			console.log("something+"+data);
 			msg=data;
 			});
 	
       this.txt_msg.text("something");
+      this.msg_flag = true;
+      }
     }, function(bonfire)
     {
       this.txt_msg.text("No Message");
+      this.msg_flag = false;
     });
   },
 
