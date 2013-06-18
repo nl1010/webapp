@@ -58,7 +58,6 @@ $text_css = { 'font-size': '24px',
             'font-family': 'Monospace', 
             'color': 'white', 
             'text-align': 'center' }
-
 $text_css_small_left = { 'font-size': '16px', 
             'font-family': 'Monospace', 
             'color': 'white', 
@@ -71,4 +70,7 @@ $text_css_event = { 'font-size': '22px',
             'font-family': 'Monospace', 
             'color': 'white', 
             'text-align': 'center' }
-
+$text_css_msg = { 'font-size': '22px', 
+            'font-family': 'Monospace', 
+            'color': 'green', 
+            'text-align': 'center' }

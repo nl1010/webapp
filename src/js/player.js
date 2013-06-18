@@ -1,6 +1,5 @@
 Crafty.c('Wizard',
 {
-
   //resources
   wood:readCookie('wood'),
   stone:readCookie('stone'),
@@ -15,10 +14,13 @@ Crafty.c('Wizard',
   soul_display:0,
   //building
   txt_buiding:0,
+  flag_build_menu:false,
   have_library:false,
   have_gateway:false,
   //event
   txt_event:0,
+  //msg
+  txt_msg:0,
   //bonfire rest
   rested_east:false,
   rested_west:false,
@@ -43,22 +45,24 @@ Crafty.c('Wizard',
     this.restWest();
     //collision handling
     this.stopOnSolids();
+    //allows players to read messages
+    this.read_message();
 
     //global constructing
-           $.ajax({
-        url: "PHP/construct_messages.php",
-      }).done(function(data) {
-        console.log(data);
-        var json = eval(data);
-        for (var i = 0;i<json.length;i++){
-          var x = json[i].x;
-          var y = json[i].y;
-          Crafty.e('Message')
-            .attr({x:x*16, y:y*16}); 
+    $.ajax({
+      url: "PHP/construct_messages.php",
+    }).done(function(data) {
+      console.log(data);
+      var json = eval(data);
+      for (var i = 0;i<json.length;i++){
+        var x = json[i].x;
+        var y = json[i].y;
+        Crafty.e('Message')
+        .attr({x:x*16, y:y*16}); 
           //alert (json[i].x+","+json[i].y);
         }
       //  alert(json);
-      }); 
+    }); 
 
     //creating resource display
     this.wood_display = Crafty.e('2D, DOM, Text')
@@ -84,6 +88,7 @@ Crafty.c('Wizard',
     .attr({ x: Game.menu_width(), y: 224 , w:164})
     .css($text_css_very_small);
     
+    this.flag_build_menu = false;
     this.display_build_menu_outer();
     
     //Event Display
@@ -91,40 +96,58 @@ Crafty.c('Wizard',
     .attr({ x: 4, y: 332, w: 600 })
     .css($text_css_event)
     .text("The adventure begins!");
+
+    //Msg Display
+    this.txt_msg = Crafty.e('2D, DOM, Text')
+    .attr({ x: 4, y: 432, w: 600 })
+    .css($text_css_msg)
+    .text("No message");
   },
 
+  //message reading
+  read_message: function()
+  {
+    this.onHit('Message', function()
+    {
+      this.txt_msg.text("Display Msg here");
+    });
+  },
+
+  //Building display
   display_build_menu_outer: function()
   {
     this.txt_building.text("[B]uild stuff");
     this.bind('KeyDown', function(e)
     {
       if (e.key==Crafty.keys['B'])
+      {
+        this.flag_build_menu=true;
         this.build_menu();
-    })
+      }
+    });
   },
 
   display_build_menu: function()
   {
-    this.txt_building.text("[A]ltar(free), [W]ooden Walls(1W), [L]ibrary(1W,1S), [G]ateway");
+    this.txt_building.text("[A]ltar(free), [W]ooden Walls(1W), [L]ibrary(1W,1S), [G]ateway(100 each)");
   },
 
   build_menu: function()
   {
     this.display_build_menu();
-    var flag = true;
     this.bind('KeyDown', function(e)
     {
-      if (e.key==Crafty.keys['A'] && flag)
-        this.build_altar();
-      if (e.key==Crafty.keys['W'] && flag)
-        this.build_wood_wall();
-      if (e.key==Crafty.keys['L'] && flag)
-        this.build_library();
-      if (e.key==Crafty.keys['G'] && flag)
-        this.build_gateway();
+      if (e.key==Crafty.keys['A'] && this.flag_build_menu)
+        {this.build_altar();this.flag_build_menu = false;}
+      if (e.key==Crafty.keys['W'] && this.flag_build_menu)
+        {this.build_wood_wall();this.flag_build_menu = false;}
+      if (e.key==Crafty.keys['L'] && this.flag_build_menu)
+        {this.build_library();this.flag_build_menu = false;}
+      if (e.key==Crafty.keys['G'] && this.flag_build_menu)
+        {this.build_gateway();this.flag_build_menu = false;}
 
       this.display_build_menu_outer();
-      flag = false;
+      this.flag_build_menu = false;
     })
   },
 
@@ -133,11 +156,10 @@ Crafty.c('Wizard',
   build_altar: function()
   {
     this.txt_event.text("Praise the Sun!");
-    this.wood += 50;
-    this.stone += 50;
-    this.iron += 50;
-    this.crystal += 50;
-    this.soul += 50;
+    this.wood +=100;
+    this.stone +=100;
+    this.iron +=100;
+    this.crystal +=100;
     this.display_resources();
     //TODO: create a img object
   },
@@ -146,18 +168,46 @@ Crafty.c('Wizard',
   build_wood_wall: function()
   {
     //TODO: build a 'Wall' object
+    if (this.wood < 1)
+      this.txt_event.text("Wood needed!")
+    else
+    {
+      this.txt_event.text("You successfully built a mighty wall!");
+      this.wood--;
+      this.display_resources();
+      Crafty.e("Wood_Wall").attr({x:this.x, y:this.y});
+    }
   },
 
   //inc souls every 10 sec
   build_library: function()
   {
     //TODO: build a 'Library' object
+    if (this.wood < 1)
+      this.txt_event.text("Wood needed!")
+    else if (this.stone < 1)
+      this.txt_event.text("Stone needed!")
+    else
+    {
+      this.txt_event.text("You successfully built a library!");
+      this.wood--;
+      this.stone--;
+      this.display_resources();
+      Crafty.e("Library").attr({x:this.x, y:this.y});
+    }
   },
 
   //wins
   build_gateway: function()
   {
     //TODO: build a 'Gateway' object
+    if (this.wood < 100 || this.stone < 100
+      || this.iron < 100 || this.crystal < 100)
+      this.txt_event.text("You don't have enough resources!")
+    else
+      {
+        Crafty.scene('Victory');
+      }
   },
 
   display_resources: function()
@@ -169,6 +219,7 @@ Crafty.c('Wizard',
     this.soul_display.text(this.soul);
   },
 
+  //bonfires
   restEast: function()
   {
     this.addComponent('Collision');
@@ -227,86 +278,87 @@ Crafty.c('Wizard',
       this.txt_event.text("");
       flag = false;
     })
-},
+  },
 
-restWest: function()
-{
-  this.addComponent('Collision');
-  this.onHit('BonfireW', function(bonfire)
+  restWest: function()
   {
-    var flag = true;
-    if (!this.rested_west)
-      this.txt_event.text("[R]est at campfire to save the resources")
-    else 
+    this.addComponent('Collision');
+    this.onHit('BonfireW', function(bonfire)
     {
-      this.txt_event.text("The fire was warm and comforting");
-      if (!this.sent_west)
+      var flag = true;
+      if (!this.rested_west)
+        this.txt_event.text("[R]est at campfire to save the resources")
+      else 
       {
-        var userid = readCookie('userid');
-        var x = readCookie('x');
-        var y = readCookie('y');
-        var iron = readCookie('iron');
-        var wood = readCookie('wood');
-        var crystal = readCookie('crystal');
-        var stone = readCookie('stone');
-        var soul = readCookie('soul');
-
-        $.post('PHP/save.php',{
-          userid:userid,
-          x:x,
-          y:y,
-          iron:iron,
-          wood:wood,
-          crystal:crystal,
-          stone:stone,
-          soul:soul
-        },function (data){
-          alert(data);
-        });
-        this.sent_west = true;
-        this.sent_east = false;
-      }
-    }
-
-
-    this.bind('KeyDown', function(e)
-    {
-      if (this.rested_west && flag)
-      {
-        flag = false;
-      } else if (e.key==Crafty.keys['R'] && flag && !this.rested_west)
-      {
-        flag = false;
-        this.rested_west = true;
-        this.west.image("assets/lit_fire.png");
-        this.rested_east = false;
-        this.east.image("assets/unlit_fire.gif");
-      }
-    });
-  }, function(bonfire)
-  {
-    this.txt_event.text("");
-    flag = false;
-  })
-},
-
-fightMonsters: function()
-{
-  this.addComponent('Collision');
-  this.onHit('Monsters', function(monster)
-  {
-    this.txt_event.text("Fight this monster![Y] / Nope![N]");
-    var flag = true;
-    this.bind('KeyDown', function(e)
-    {
-      if (e.key==Crafty.keys['Y'] && flag)
-      {
-        if (this.wood >= 1 && this.iron >= 1
-          && this.stone >= 1 && this.crystal >= 1)
+        this.txt_event.text("The fire was warm and comforting");
+        if (!this.sent_west)
         {
-          this.txt_event.text("Uraaa!");
+          var userid = readCookie('userid');
+          var x = readCookie('x');
+          var y = readCookie('y');
+          var iron = readCookie('iron');
+          var wood = readCookie('wood');
+          var crystal = readCookie('crystal');
+          var stone = readCookie('stone');
+          var soul = readCookie('soul');
+
+          $.post('PHP/save.php',{
+            userid:userid,
+            x:x,
+            y:y,
+            iron:iron,
+            wood:wood,
+            crystal:crystal,
+            stone:stone,
+            soul:soul
+          },function (data){
+            alert(data);
+          });
+          this.sent_west = true;
+          this.sent_east = false;
+        }
+      }
+
+
+      this.bind('KeyDown', function(e)
+      {
+        if (this.rested_west && flag)
+        {
           flag = false;
-          monster[0].obj.destroy();
+        } else if (e.key==Crafty.keys['R'] && flag && !this.rested_west)
+        {
+          flag = false;
+          this.rested_west = true;
+          this.west.image("assets/lit_fire.png");
+          this.rested_east = false;
+          this.east.image("assets/unlit_fire.gif");
+        }
+      });
+    }, function(bonfire)
+    {
+      this.txt_event.text("");
+      flag = false;
+    })
+  },
+
+  //monster fighting
+  fightMonsters: function()
+  {
+    this.addComponent('Collision');
+    this.onHit('Monsters', function(monster)
+    {
+      this.txt_event.text("Fight this monster![Y] / Nope![N]");
+      var flag = true;
+      this.bind('KeyDown', function(e)
+      {
+        if (e.key==Crafty.keys['Y'] && flag)
+        {
+          if (this.wood >= 1 && this.iron >= 1
+            && this.stone >= 1 && this.crystal >= 1)
+          {
+            this.txt_event.text("Uraaa!");
+            flag = false;
+            monster[0].obj.destroy();
             //reduces resources
             this.wood--; this.iron--;
             this.stone--; this.crystal--;
@@ -334,38 +386,47 @@ fightMonsters: function()
           this.txt_event.text("You ignore the beast");
           flag = false;
         }
-        else if (flag) {this.txt_event.text("You ran away as fast as you can!");flag = false}
+        else if (flag) 
+        {
+          this.txt_event.text("You ran away as fast as you can!");
+          flag = false
+        }
       })
-});
-},
+    });
+  },
 
-collectResources: function()
-{
-  this.addComponent('Collision');
-  this.onHit('Resources', function(res)
+  //resources
+  collectResources: function()
   {
-    if (res[0].obj.has('Trees'))
+    this.addComponent('Collision');
+    this.onHit('Resources', function(res)
     {
-      this.txt_event.text("Chop that tree down![Y] Dude, I'm an elf![N]");
-        //need this to solve the resource keyboard bug
+      if (res[0].obj.has('Trees'))
+      {
+        this.txt_event.text("Chop that tree down![Y] Dude, I'm an elf![N]");
+          //need this to solve the resource keyboard bug
         var flag = true;
         this.bind('KeyDown', function(e)
         {
           if (e.key==Crafty.keys['Y'] && flag)
           {
-            this.txt_event.text("You chopped the tree and gained 1 wood. Take that Nature!");
+            this.txt_event.text("You chopped the tree and gained 1 wood. Take that, Nature!");
             this.wood++;
             createCookie('wood', this.wood, 1);
             this.display_resources();
             res[0].obj.destroy();
-            flag = false;
+            //flag = false;
           }
           else if (e.key==Crafty.keys['N'] && flag)
           {
             this.txt_event.text("You left it alone");
             flag = false;
           }
-          else {this.txt_event.text("");flag = false}
+          else 
+          {
+            this.txt_event.text("");
+            flag = false;
+          }
         })
       } 
 
@@ -441,7 +502,7 @@ collectResources: function()
         })
       }
     })
-},
+  },
 
 	//if onHit, stopMovement
 	stopOnSolids: function()
