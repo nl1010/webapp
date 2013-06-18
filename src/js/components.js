@@ -60,6 +60,41 @@ Crafty.c('Obstacle',
   }
 });
 
+/*Traps  ---------------------------------------------------------*/
+/*----------------------------------------------------------------*/
+
+Crafty.c('Trap',
+{
+  init: function()
+  {
+    this.requires('Actor');
+  }
+});
+
+Crafty.c('Between',
+{
+  init: function()
+  {
+    this.requires('Trap');
+  }
+});
+
+Crafty.c('Graveyard',
+{
+  init: function()
+  {
+    this.requires('Trap');
+  }
+});
+
+Crafty.c('Dragon',
+{
+  init: function()
+  {
+    this.requires('Trap');
+  }
+});
+
 /*Bonfire---------------------------------------------------------*/
 /*----------------------------------------------------------------*/
 

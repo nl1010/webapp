@@ -28,6 +28,7 @@ Crafty.c('Wizard',
   sent_east:false,
   sent_west:false,
 
+
   init: function()
   {
     this.requires('Actor, PlayerControls, Slide, spr_player')
@@ -49,6 +50,8 @@ Crafty.c('Wizard',
     //if have_library, inc souls every 10 sec
     this.have_library = false;
     this.library_income();
+    //trigger traps
+    this.trigger_trap();
 
     //global constructing
     $.ajax({
@@ -521,5 +524,55 @@ Crafty.c('Wizard',
   library_income: function()
   {
     
+  },
+
+  trigger_trap: function()
+  {
+    this.addComponent('Collision');
+    this.onHit('Trap', function(trap)
+    {
+      if (trap[0].obj.has('Between'))
+      {
+        this.txt_event.text("Two golems ambushed you and punched you to death. [O]mg..");
+        var flag = true;
+        this.bind('KeyDown', function(e)
+        {
+          this.cancelSlide();
+          if (e.key==Crafty.keys['O'])
+          {
+            flag = false;
+            Crafty.scene('Lose');
+          }
+        })
+      }
+      if (trap[0].obj.has('Graveyard'))
+      {
+        this.txt_event.text("A zombie rose from the grave and bit your foot. You got infected! I'm so [S]orry...");
+        var flag = true;
+        this.bind('KeyDown', function(e)
+        {
+          this.cancelSlide();
+          if (e.key==Crafty.keys['S'])
+          {
+            flag = false;
+            Crafty.scene('Lose');
+          }
+        })
+      }
+      if (trap[0].obj.has('Dragon'))
+      {
+        this.txt_event.text("The Dragon bit your head off before you can react. [S]igh");
+        var flag = true;
+        this.bind('KeyDown', function(e)
+        {
+          this.cancelSlide();
+          if (e.key==Crafty.keys['S'])
+          {
+            flag = false;
+            Crafty.scene('Lose');
+          }
+        })
+      }
+    });
   }
 });

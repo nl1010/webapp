@@ -90,6 +90,18 @@ Crafty.e("2D,DOM,TiledMapBuilder")
   this.player = Crafty.e('Wizard')
   .attr({x:304, y:144});
 
+  //traps
+  this.trap_between1 = Crafty.e('Between')
+  .attr({x:304, y:176});
+  this.trap_between2 = Crafty.e('Between')
+  .attr({x:320, y:176});
+  this.trap_grave1 = Crafty.e('Graveyard')
+  .attr({x:112, y:176});
+  this.trap_grave1 = Crafty.e('Graveyard')
+  .attr({x:96, y:144});
+  this.trap_dragon = Crafty.e('Dragon')
+  .attr({x:384, y:64});
+
   //Side Bar---------------------------
   /*----------------------------------------------------------------*/
   //Resources:
