@@ -141,19 +141,20 @@ Crafty.e("2D,DOM,TiledMapBuilder")
 Crafty.scene('Victory', function() 
 {
   Crafty.e('2D, DOM, Text')
-  .attr({ x: Game.width()/2-32, 
-    y: Game.height()/2-32 })
-  .text('Finally you have succeeded in building the Gateway. You can now escape the island!...Bye')
+  .attr({ x: Game.width()/2-256, 
+    y: Game.height()/2-100,
+    w: 512 })
+  .text('Finally you have succeeded in building the Gateway. You can now escape the island!...bye :(')
   .css($text_css);
 
-  this.restart_game 
+  this.restart_game1
   = this.bind('KeyDown', function() 
   {
     Crafty.scene('Game');
   });
 }, function() 
 {
-  this.unbind('KeyDown', this.restart_game);
+  this.unbind('KeyDown', this.restart_game1);
 });
 
 //Die Scene
@@ -166,14 +167,14 @@ Crafty.scene('Lose', function()
     w: Game.width() })
   .css($text_css);
   
-  this.restart_game 
+  this.restart_game2
   = this.bind('KeyDown', function() 
   {
     Crafty.scene('Game');
   });
 }, function() 
 {
-  this.unbind('KeyDown', this.restart_game);
+  this.unbind('KeyDown', this.restart_game2);
 });
 
 // Loading scene
