@@ -1,4 +1,3 @@
-#!/user/bin/php
 <?php 
 
 #Player class to store current player info

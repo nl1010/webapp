@@ -33,22 +33,20 @@
 				username : username,
 				password : password
 			}, function(data) {
+				console.log(data);
 				 userid=parseInt(data);
-				$('div#respons').text("have logged in? "+userid);
 
 				if (userid <9999){
 					$('div#respons').text("Login successful with user ID "+userid);
-
-					createCookie("userid",userid,1);
 					
+					createCookie("userid",userid,1);
+					console.log('start restore');
 					$.post('PHP/restore_player.php',{
 						user_id : userid	
 					},function(data) {
-							alert("message"+data);
+							alert(data);
 							document.location.href="island.html"; 
-							
 						  });
-			
 					}
 				else $('div#respons').text(data);
 			});
