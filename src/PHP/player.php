@@ -86,8 +86,11 @@ class Player {
 			$player->__set("crystal",$row['crystal']);
 			$player -> __set("iron",$row['iron']);
 			$player -> __set('stone',$row['stone']);
-			
-
+			$player -> __set('x',$row['x']);
+			$player -> __set('y',$row['y']);
+				
+				
+		
 			//add more filed here
 			return $player;
 		}else {
