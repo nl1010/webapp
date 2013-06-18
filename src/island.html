@@ -44,7 +44,8 @@
 	<div style="text-align: center;">
 		<input type="submit" id="submit" value="Leave Message" style="background-color: red;width: 5cm;height: 2cm;">
 		<input type="submit" id="logout" value="Log Out" style="background-color: red;width: 5cm;height: 2cm;">
-		
+		<input type="submit" id="test" value="Push For Magic!" style="background-color: red;width: 5cm;height: 2cm;">
+			
 	</div>
 	<script type="text/javascript">
 	$('input#logout').on('click',function(){
@@ -75,16 +76,16 @@
 		}
   });
 	
-	/* $('input#save').on('click',function(){
-		var userid = readCookie('userid');
+	 $('input#test').on('click',function(){
+/* 		var userid = readCookie('userid');
 		var x = readCookie('x');
 		var y = readCookie('y');
 		var iron = readCookie('iron');
 		var wood = readCookie('wood');
 		var crystal = readCookie('crystal');
 		var stone = readCookie('stone');
-		var soul = readCookie('soul');
-		$.post('PHP/save.php',{
+		var soul = readCookie('soul'); */
+/* 		$.post('PHP/save.php',{
 			userid:userid,
 			x:x,
 			y:y,
@@ -95,8 +96,23 @@
 			soul:soul
 		},function (data){
 			alert(data);
-		});
-	}); */
+		}); */
+		
+		 $.ajax({
+			  url: "PHP/construct_messages.php",
+			}).done(function(data) {
+				console.log(data);
+				var json = eval(data);
+				for (var i = 0;i<json.length;i++){
+					var x = json[i].x;
+					var y = json[i].y;
+					Crafty.e('Message')
+		    		.attr({x:x*16, y:y*16}); 
+					//alert (json[i].x+","+json[i].y);
+				}
+			//  alert(json);
+			});	
+		}); 
   </script>
 </body>
 

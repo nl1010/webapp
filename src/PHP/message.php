@@ -73,6 +73,16 @@ Class Message{
 		}
 	}
 	
+	#return all message location in the database , this method is server for init the map
+	public static function __get_all_message_locations (){
+		$query=sprintf('SELECT x,y FROM table_message');
+		$result=pg_query($GLOBALS["DB"],$query);
+		$rows = array();
+		while($r = pg_fetch_assoc($result)) {
+			$rows[] = $r;
+		}
+		return json_encode($rows);
+	}
 }
 
 
