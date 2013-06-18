@@ -1,4 +1,4 @@
-#!/user/bin/php
+#!/usr/bin/php
 <?php 
 require ('db.php');
 require ('message.php');
@@ -7,5 +7,6 @@ $x = $_POST['x'];
 $y = $_POST['y'];
 $message = Message::__get_message($x,$y);
 
-echo message;
+//echo $message;
+echo "lala";
 ?>

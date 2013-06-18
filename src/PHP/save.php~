@@ -1,4 +1,4 @@
-#!/user/bin/php
+#!/usr/bin/php
 <?php 
 
 require_once('../Library/PhpConsole.php');

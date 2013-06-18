@@ -41,7 +41,7 @@ Class Message{
 		if(pg_num_rows($result)!=0){
 			$row = pg_fetch_assoc($result);
 			$message = $row['message'];
-			return $message;
+			echo $message;
 		} else return false ; #message doesn't exist
 	}
 	

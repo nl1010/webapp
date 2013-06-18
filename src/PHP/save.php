@@ -1,9 +1,6 @@
 #!/usr/bin/php
 <?php 
 
-require_once('../Library/PhpConsole.php');
-PhpConsole::start(true, true, dirname(__FILE__));
-
 require ('db.php');
 require ('player.php');
 

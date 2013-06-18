@@ -230,7 +230,7 @@ Crafty.c('Wizard',
 				x : x,
 				y : y
 			}, function(data) {
-			console.log("something+"+data);
+			console.log(data);
 			msg=data;
 			});
 	
