@@ -1,5 +1,9 @@
+#!/user/bin/php
 <?php
 #---class Message------
+require_once('../Library/PhpConsole.php');
+PhpConsole::start(true, true, dirname(__FILE__));
+
 Class Message{
 	private $x;
 	private $y;

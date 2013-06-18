@@ -1,6 +1,8 @@
 #!/usr/bin/php
 
 <?php  
+#load debugging lib
+
 require ('db.php');
 
 
