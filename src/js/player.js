@@ -16,7 +16,6 @@ Crafty.c('Wizard',
   txt_buiding:0,
   flag_build_menu:false,
   have_library:false,
-  have_gateway:false,
   //event
   txt_event:0,
   //msg
@@ -31,7 +30,7 @@ Crafty.c('Wizard',
 
   init: function()
   {
-    this.requires('Actor, PlayerControls, Slide, spr_player')
+    this.requires('Actor, PlayerControls, Slide, spr_player, Delay')
     //collect res
     this.collectResources();
     //fight monsters
@@ -47,6 +46,8 @@ Crafty.c('Wizard',
     this.stopOnSolids();
     //allows players to read messages
     this.read_message();
+    //if have_library, inc souls every 10 sec
+    this.library_income();
 
     //global constructing
     $.ajax({
@@ -512,6 +513,18 @@ Crafty.c('Wizard',
     {
       this.cancelSlide();
     });
+  },
+
+  library_income: function()
+  {
+    this.onHit('Library', function(bonfire)
+    {
+      this.delay(function()
+      {
+        console.log("1sec later");
+        this.soul++; this.display_resources();
+      },10000,0);
+    })
   }
 
 });
