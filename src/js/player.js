@@ -223,6 +223,9 @@ Crafty.c('Wizard',
     this.onHit('Message', function(msg)
     {
       this.txt_msg.text("Display Msg here");
+    }, function(bonfire)
+    {
+      this.txt_msg.text("No Message");
     });
   },
 
