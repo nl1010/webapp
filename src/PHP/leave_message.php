@@ -1,4 +1,4 @@
-#!/user/bin/php
+#!/usr/bin/php
 <?php 
 	require ('db.php');
 	require ('message.php');
@@ -8,5 +8,5 @@
 	$x = $_POST['x'];
 	$y = $_POST['y'];
 	Message::__store_message($x,$y,$message);
-	}else echo "message cannot be empty";
+	}
 ?>

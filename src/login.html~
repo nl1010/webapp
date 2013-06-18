@@ -45,6 +45,7 @@
 						user_id : userid	
 					},function(data) {
 							alert(data);
+
 							document.location.href="island.html"; 
 						  });
 					}
