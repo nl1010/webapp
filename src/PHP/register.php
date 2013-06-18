@@ -9,7 +9,6 @@
 	if(!$GLOBALS['DB'] = pg_connect("host=localhost port=5432 dbname=webapp2013 user=postgres password=luningyuan7210")){
 	die('Error:Unable to connect the database </br>');
 	}
-	//else echo "success to connect the database </br>";
 	
 	$username = $_POST['username'];
 	$password = $_POST['password'];

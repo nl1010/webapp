@@ -1,11 +1,12 @@
 Crafty.c('Wizard',
 {
+
   //resources
-  wood:0,
-  stone:0,
-  iron:0,
-  crystal:0,
-  soul:0,
+  wood:readCookie('wood'),
+  stone:readCookie('stone'),
+  iron:readCookie('iron'),
+  crystal:readCookie('crystal'),
+  soul:readCookie('soul'),
   //display
   wood_display:0,
   stone_display:0,

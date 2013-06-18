@@ -13,6 +13,4 @@ $password = $_POST['password'];
 require_once('user.php');
 $user_id = User::password_check($username,$password);
 
-// setcookie("userid",$player->uid);
-// setcookie("wood",$player->fields['wood']);
 ?>
