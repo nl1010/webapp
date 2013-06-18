@@ -94,7 +94,7 @@ class User {
 	public static function password_check($username,$password){
 		$user = User::get_by_name($username);
 		if($user == false){
-			echo "user doesn't exist   ".$username;
+			echo "user doesn't exist".$username;
 			return false;
 		}else {
 			if($password == null) {

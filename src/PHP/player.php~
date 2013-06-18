@@ -90,10 +90,10 @@ class Player {
 			$player -> __set('soul',$row['soul']);
 			$player -> __set('x',$row['x']);
 			$player -> __set('y',$row['y']);
-			//echo "reached";
+			echo "reached";
 			return $player;
 		}else {
-			//echo "not reached";
+			echo "not reached";
 			return false;
 		}
 

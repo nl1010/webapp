@@ -1,4 +1,3 @@
-#!/user/bin/php
 <?php 
 	require ('db.php');
 	require ('message.php');

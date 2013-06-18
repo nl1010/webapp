@@ -1,4 +1,3 @@
-#!/user/bin/php
 <?php
 #---class Message------
 require_once('../Library/PhpConsole.php');

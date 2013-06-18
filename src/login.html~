@@ -34,7 +34,7 @@
 				password : password
 			}, function(data) {
 				 userid=parseInt(data);
-				console.log(userid);
+				$('div#respons').text("have logged in? "+userid);
 
 				if (userid <9999){
 					$('div#respons').text("Login successful with user ID "+userid);
