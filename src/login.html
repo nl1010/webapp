@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <html>
 
 <head>
@@ -25,24 +26,37 @@
 	<script src="Library/cookie.js"></script>
 	<script type="text/javascript">
 		$('input#submit').on('click', function() {
+			var userid;
 			var username = $('input#username').val();
 			var password = $('input#password').val();
 			$.post('PHP/login.php', {
 				username : username,
 				password : password
 			}, function(data) {
-				var userid=parseInt(data);
+				 userid=parseInt(data);
 				if (userid <9999){
 					$('div#respons').text("Login successful with user ID "+userid);
 					createCookie("userid",userid,1);
-					document.location.href="island.html";
+					
+					$.ajax({
+						  url: 'PHP/restore_player.php',
+						  success: function(data) {
+							
+						  }
+						});
+			
+					createCookie("userid",1000,1);
+					console.log(userid);
+					document.location.href="island.html"; 
 					}
 				else $('div#respons').text(data);
 			});
+			
+
 		});
 		
-//create cookie to store ID 
-	
+
+			
 
 	</script>
 </body>

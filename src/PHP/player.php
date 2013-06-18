@@ -48,6 +48,8 @@ class Player {
 			$player->__set("crystal",$crystal);
 			$player -> __set("iron",$iron);
 			$player -> __set('stone',$stone);
+			$player -> __set('x',$x);
+			$player -> __set('y',$y);
 			$query=sprintf('UPDATE table_player SET x=%d , y=%d, wood=%d , crystal=%d , iron=%d , stone=%d WHERE user_id = %d',
 					pg_escape_string($player->fields['x']),
 					pg_escape_string($player->fields['y']),
@@ -78,13 +80,15 @@ class Player {
 		$query = sprintf('SELECT * FROM table_player WHERE user_id = %d',pg_escape_string($userid));
 		$result=pg_query($GLOBALS['DB'],$query);
 		if(pg_num_rows($result)!=0){//check if query exist
-			$row = pg_fetch_assoc($result); //fetch contends
-			$player->userid=$userid;
-			$player->fields['wood']=$row['wood'];
-			echo $player->fields['wood'];
-			$player->fields['iron'] = $row['iron'];
-			//add more filed here
+			$row = pg_fetch_assoc($result); //fetch contents
+			$player->__set("userid",$userid);
+			$player->__set("wood",$row['wood']);
+			$player->__set("crystal",$row['crystal']);
+			$player -> __set("iron",$row['iron']);
+			$player -> __set('stone',$row['stone']);
 			
+
+			//add more filed here
 			return $player;
 		}else {
 			return false;
