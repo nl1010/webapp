@@ -173,6 +173,7 @@ Crafty.c('Wizard',
           var wood = readCookie('wood');
           var crystal = readCookie('crystal');
           var stone = readCookie('stone');
+          var soul = readCookie('soul');
           $.post('PHP/save.php',{
             userid:userid,
             x:x,
@@ -180,7 +181,8 @@ Crafty.c('Wizard',
             iron:iron,
             wood:wood,
             crystal:crystal,
-            stone:stone
+            stone:stone,
+            soul:soul
           },function (data){
             alert(data);
           });
@@ -231,6 +233,8 @@ restWest: function()
         var wood = readCookie('wood');
         var crystal = readCookie('crystal');
         var stone = readCookie('stone');
+        var soul = readCookie('soul');
+
         $.post('PHP/save.php',{
           userid:userid,
           x:x,
@@ -238,7 +242,8 @@ restWest: function()
           iron:iron,
           wood:wood,
           crystal:crystal,
-          stone:stone
+          stone:stone,
+          soul:soul
         },function (data){
           alert(data);
         });
@@ -290,6 +295,7 @@ fightMonsters: function()
             this.wood--; this.iron--;
             this.stone--; this.crystal--;
             this.soul++;
+            createCookie('soul',this.soul,1);
             this.display_resources();
             var flag2 = true;
             this.bind('KeyDown', function(e)

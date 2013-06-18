@@ -44,7 +44,6 @@
 	<div style="text-align: center;">
 		<input type="submit" id="submit" value="Leave Message" style="background-color: red;width: 5cm;height: 2cm;">
 		<input type="submit" id="logout" value="Log Out" style="background-color: red;width: 5cm;height: 2cm;">
-		<input type="submit" id="save" value="Save" style="background-color: red;width: 5cm;height: 2cm;">
 		
 	</div>
 	<script type="text/javascript">
@@ -76,7 +75,7 @@
 		}
   });
 	
-	$('input#save').on('click',function(){
+	/* $('input#save').on('click',function(){
 		var userid = readCookie('userid');
 		var x = readCookie('x');
 		var y = readCookie('y');
@@ -84,6 +83,7 @@
 		var wood = readCookie('wood');
 		var crystal = readCookie('crystal');
 		var stone = readCookie('stone');
+		var soul = readCookie('soul');
 		$.post('PHP/save.php',{
 			userid:userid,
 			x:x,
@@ -91,11 +91,12 @@
 			iron:iron,
 			wood:wood,
 			crystal:crystal,
-			stone:stone
+			stone:stone,
+			soul:soul
 		},function (data){
 			alert(data);
 		});
-	});
+	}); */
   </script>
 </body>
 

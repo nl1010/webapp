@@ -8,7 +8,7 @@ class Player {
 	#initialize user obj
 	public function __construct(){
 		$this->uid ='';
-		$this->fields = array("x"=>0,"y"=>0,"wood" =>0,"iron"=>0,"stone"=>0,"crystal"=>0);
+		$this->fields = array("x"=>0,"y"=>0,"wood" =>0,"iron"=>0,"stone"=>0,"crystal"=>0,"soul"=>0);
 	}
 
 	#get function
@@ -33,14 +33,14 @@ class Player {
 
 	#call this function to initialize player table --ONLY CALLED WHEN REGISTED
 	public static function init_player_table ($userid){
-		$query=sprintf('INSERT INTO table_player (user_id,iron,wood,stone,crystal) VALUES (%d,0,0,0,0)',pg_escape_string($userid));
+		$query=sprintf('INSERT INTO table_player (user_id,iron,wood,stone,crystal,soul) VALUES (%d,0,0,0,0,0)',pg_escape_string($userid));
 		if (pg_query($GLOBALS['DB'],$query)){
 			return true;
 		}else return false;
 	}
 
 	#save player info
-	public static function __save_player_info_to_DB($userid,$x,$y,$wood,$crystal,$iron,$stone){
+	public static function __save_player_info_to_DB($userid,$x,$y,$wood,$crystal,$iron,$stone,$soul){
 		if ($userid != null ){
 			$player = new Player();
 			$player->__set("userid",$userid);
@@ -48,21 +48,21 @@ class Player {
 			$player->__set("crystal",$crystal);
 			$player -> __set("iron",$iron);
 			$player -> __set('stone',$stone);
+			$player -> __set('soul',$soul);
 			$player -> __set('x',$x);
 			$player -> __set('y',$y);
-			$query=sprintf('UPDATE table_player SET x=%d , y=%d, wood=%d , crystal=%d , iron=%d , stone=%d WHERE user_id = %d',
+			$query=sprintf('UPDATE table_player SET x=%d , y=%d, wood=%d , crystal=%d , iron=%d , stone=%d ,soul=%d WHERE user_id = %d',
 					pg_escape_string($player->fields['x']),
 					pg_escape_string($player->fields['y']),
 					pg_escape_string($player->fields['wood']),
 					pg_escape_string($player->fields['crystal']),
 					pg_escape_string($player->fields['iron']),
 					pg_escape_string($player->fields['stone']),
+					pg_escape_string($player->fields['soul']),
 					pg_escape_string($player->uid)
 			);
 			echo $query;
 			if(pg_query($GLOBALS['DB'],$query)){
-				//successfully inserted
-				//echo "save successful";
 				return $player;
 			} else
 				echo "error to save player's info";
@@ -86,6 +86,7 @@ class Player {
 			$player->__set("crystal",$row['crystal']);
 			$player -> __set("iron",$row['iron']);
 			$player -> __set('stone',$row['stone']);
+			$player -> __set('soul',$row['soul']);
 			$player -> __set('x',$row['x']);
 			$player -> __set('y',$row['y']);
 			return $player;
