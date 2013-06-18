@@ -30,7 +30,7 @@ Crafty.c('Wizard',
 
   init: function()
   {
-    this.requires('Actor, PlayerControls, Slide, spr_player, Delay')
+    this.requires('Actor, PlayerControls, Slide, spr_player')
     //collect res
     this.collectResources();
     //fight monsters
@@ -47,6 +47,7 @@ Crafty.c('Wizard',
     //allows players to read messages
     this.read_message();
     //if have_library, inc souls every 10 sec
+    this.have_library = false;
     this.library_income();
 
     //global constructing
@@ -67,19 +68,19 @@ Crafty.c('Wizard',
 
     //creating resource display
     this.wood_display = Crafty.e('2D, DOM, Text')
-    .attr({ x: Game.menu_width()+36, y: 0 })
+    .attr({ x: Game.menu_width()+75, y: 0 })
     .css($text_css);
     this.stone_display = Crafty.e('2D, DOM, Text')
-    .attr({ x: Game.menu_width()+36, y: 32 })
+    .attr({ x: Game.menu_width()+90, y: 32 })
     .css($text_css);
     this.iron_display = Crafty.e('2D, DOM, Text')
-    .attr({ x: Game.menu_width()+36, y: 64 })
+    .attr({ x: Game.menu_width()+75, y: 64 })
     .css($text_css);
     this.crystal_display = Crafty.e('2D, DOM, Text')
-    .attr({ x: Game.menu_width()+36, y: 96 })
+    .attr({ x: Game.menu_width()+118, y: 96 })
     .css($text_css);
     this.soul_display = Crafty.e('2D, DOM, Text')
-    .attr({ x: Game.menu_width()+36, y: 128 })
+    .attr({ x: Game.menu_width()+75, y: 128 })
     .css($text_css);
 
     this.display_resources();
@@ -103,15 +104,6 @@ Crafty.c('Wizard',
     .attr({ x: 4, y: 432, w: 600 })
     .css($text_css_msg)
     .text("No message");
-  },
-
-  //message reading
-  read_message: function()
-  {
-    this.onHit('Message', function()
-    {
-      this.txt_msg.text("Display Msg here");
-    });
   },
 
   //Building display
@@ -191,6 +183,7 @@ Crafty.c('Wizard',
     else
     {
       this.txt_event.text("You successfully built a library!");
+      this.have_library = true;
       this.wood--;
       this.stone--;
       this.display_resources();
@@ -218,6 +211,16 @@ Crafty.c('Wizard',
     this.iron_display.text(this.iron);
     this.crystal_display.text(this.crystal);
     this.soul_display.text(this.soul);
+  },
+
+  //message reading
+  read_message: function()
+  {
+    this.addComponent('Collision');
+    this.onHit('Message', function(msg)
+    {
+      this.txt_msg.text("Display Msg here");
+    });
   },
 
   //bonfires
@@ -517,14 +520,6 @@ Crafty.c('Wizard',
 
   library_income: function()
   {
-    this.onHit('Library', function(bonfire)
-    {
-      this.delay(function()
-      {
-        console.log("1sec later");
-        this.soul++; this.display_resources();
-      },10000,0);
-    })
+    
   }
-
 });

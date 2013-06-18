@@ -96,31 +96,31 @@ Crafty.e("2D,DOM,TiledMapBuilder")
   Crafty.e('2D, DOM, Text')
   .attr({ x: Game.menu_width()+4, 
     y: 0 })
-  .text('W: ')
+  .text('Wood: ')
   .css($text_css);
 
   Crafty.e('2D, DOM, Text')
   .attr({ x: Game.menu_width()+4, 
     y: 32 })
-  .text('S: ')
+  .text('Stone: ')
   .css($text_css);
 
   Crafty.e('2D, DOM, Text')
   .attr({ x: Game.menu_width()+4, 
     y: 64 })
-  .text('I: ')
+  .text('Iron: ')
   .css($text_css);
 
   Crafty.e('2D, DOM, Text')
   .attr({ x: Game.menu_width()+4, 
     y: 96 })
-  .text('C: ')
+  .text('Crystal: ')
   .css($text_css);
 
   Crafty.e('2D, DOM, Text')
   .attr({ x: Game.menu_width()+4, 
     y: 128 })
-  .text('S: ')
+  .text('Soul: ')
   .css($text_css);
 
   Crafty.e('2D, DOM, Text')
