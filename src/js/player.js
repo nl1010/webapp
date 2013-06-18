@@ -44,6 +44,22 @@ Crafty.c('Wizard',
     //collision handling
     this.stopOnSolids();
 
+    //global constructing
+           $.ajax({
+        url: "PHP/construct_messages.php",
+      }).done(function(data) {
+        console.log(data);
+        var json = eval(data);
+        for (var i = 0;i<json.length;i++){
+          var x = json[i].x;
+          var y = json[i].y;
+          Crafty.e('Message')
+            .attr({x:x*16, y:y*16}); 
+          //alert (json[i].x+","+json[i].y);
+        }
+      //  alert(json);
+      }); 
+
     //creating resource display
     this.wood_display = Crafty.e('2D, DOM, Text')
     .attr({ x: Game.menu_width()+36, y: 0 })
