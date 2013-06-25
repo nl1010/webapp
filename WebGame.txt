@@ -1,0 +1,51 @@
+*The world:
+	2D
+	32x32 = 1024 tiles
+	Types of tiles:
+		?
+
+*Interaction with world:
+	Only the wizard can move around
+	The map will follow the wizard
+	Use arrow keys to move around.
+	Press F to interact with stuff
+		Interact with base
+		Order henchmen to gather stuff
+		Interact with Summon Signs:
+			Place
+			Step into
+		Interact with players: 
+			Trade, 
+			Gestures, 
+			Fights,
+		Challenge players to duels -open fightscene
+		Fight with creatures, bosses -open fightscene
+	+Random events:
+		There will be random events in random tiles
+		Can provide items, resources
+		Can kill you (traps etc)
+		Can spawn creatures
+		Types of events depend on tile type:
+			ie you can only be attacked by shark when ur swimming in the sea
+
+*The Base:
+	Players start with a base (3x3)
+	Contains 7 henchmen
+	Professions:
+		?
+	Can expand, 
+	Upgrade(expand) tree:
+		?
+
+*World creatures:
+	Normal:
+		?
+	Bosses:
+		?
+
+*The Fightscene:
+	A window of text is displayed?
+	Player chooses spell or item?
+
+*Thoughts:
+	At first I thought this game would be a breeze. I was wrong. This type of game requires me to build a good engine, about which I have zero experience. The large map introduces performance issues. And who will design the map? There are tools out there, but I haven't used any of them before. Time is not an issue if I have motivation. I can learn them all in a week if I really want to. Tbh, what I want is this year to end already.
